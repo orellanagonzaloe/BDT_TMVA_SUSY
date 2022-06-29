@@ -3,6 +3,17 @@ BDT with TMVA
 
 Tool to train a BDT (or other methods) with TMVA from ROOT to discriminate signal from background in a SUSY EWK analysis
 
+## Setup
+
+First setup
+
+	git clone ssh://git@gitlab.cern.ch:7999/atlas-susy-photon/ph_jets/phx_tmva.git
+	git clone ssh://git@gitlab.cern.ch:7999/goorella/PlotTools.git
+	mkdir HTCondor/log
+
+Setup before every run
+
+	source setup.sh
 
 ## Create train and test ntuples 
 
