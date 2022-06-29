@@ -1,0 +1,83 @@
+rm /eos/user/g/goorella/plots/PhX_TMVA/*.pdf
+
+python plotSignificance.py --plotSignal --methodsPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_1_GGM_N1N2C1_phb_150/ --histPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_1_GGM_N1N2C1_phb_150/ --tag GGM_N1N2C1_phb_150
+python plotSignificance.py --plotSignal --methodsPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_1_GGM_N1N2C1_phb_250/ --histPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_1_GGM_N1N2C1_phb_250/ --tag GGM_N1N2C1_phb_250
+python plotSignificance.py --plotSignal --methodsPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_1_GGM_N1N2C1_phb_350/ --histPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_1_GGM_N1N2C1_phb_350/ --tag GGM_N1N2C1_phb_350
+python plotSignificance.py --plotSignal --methodsPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_1_GGM_N1N2C1_phb_450/ --histPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_1_GGM_N1N2C1_phb_450/ --tag GGM_N1N2C1_phb_450
+python plotSignificance.py --plotSignal --methodsPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_1_GGM_N1N2C1_phb_550/ --histPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_1_GGM_N1N2C1_phb_550/ --tag GGM_N1N2C1_phb_550
+python plotSignificance.py --plotSignal --methodsPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_1_GGM_N1N2C1_phb_650/ --histPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_1_GGM_N1N2C1_phb_650/ --tag GGM_N1N2C1_phb_650
+python plotSignificance.py --plotSignal --methodsPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_1_GGM_N1N2C1_phb_750/ --histPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_1_GGM_N1N2C1_phb_750/ --tag GGM_N1N2C1_phb_750
+python plotSignificance.py --plotSignal --methodsPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_1_GGM_N1N2C1_phb_850/ --histPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_1_GGM_N1N2C1_phb_850/ --tag GGM_N1N2C1_phb_850
+python plotSignificance.py --plotSignal --methodsPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_1_GGM_N1N2C1_phb_950/ --histPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_1_GGM_N1N2C1_phb_950/ --tag GGM_N1N2C1_phb_950
+python plotSignificance.py --plotSignal --methodsPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_1_GGM_N1N2C1_phb_1050/ --histPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_1_GGM_N1N2C1_phb_1050/ --tag GGM_N1N2C1_phb_1050
+python plotSignificance.py --plotSignal --methodsPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_1_GGM_N1N2C1_phb_1250/ --histPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_1_GGM_N1N2C1_phb_1250/ --tag GGM_N1N2C1_phb_1250
+python plotSignificance.py --plotSignal --methodsPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_1_GGM_N1N2C1_phb_1450/ --histPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_1_GGM_N1N2C1_phb_1450/ --tag GGM_N1N2C1_phb_1450
+
+python plotSignificance.py --plotSignal --methodsPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_1_GGM_N1N2C1_phZ_150/ --histPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_1_GGM_N1N2C1_phZ_150/ --tag GGM_N1N2C1_phZ_150
+python plotSignificance.py --plotSignal --methodsPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_1_GGM_N1N2C1_phZ_250/ --histPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_1_GGM_N1N2C1_phZ_250/ --tag GGM_N1N2C1_phZ_250
+python plotSignificance.py --plotSignal --methodsPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_1_GGM_N1N2C1_phZ_350/ --histPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_1_GGM_N1N2C1_phZ_350/ --tag GGM_N1N2C1_phZ_350
+python plotSignificance.py --plotSignal --methodsPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_1_GGM_N1N2C1_phZ_450/ --histPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_1_GGM_N1N2C1_phZ_450/ --tag GGM_N1N2C1_phZ_450
+python plotSignificance.py --plotSignal --methodsPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_1_GGM_N1N2C1_phZ_550/ --histPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_1_GGM_N1N2C1_phZ_550/ --tag GGM_N1N2C1_phZ_550
+python plotSignificance.py --plotSignal --methodsPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_1_GGM_N1N2C1_phZ_650/ --histPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_1_GGM_N1N2C1_phZ_650/ --tag GGM_N1N2C1_phZ_650
+python plotSignificance.py --plotSignal --methodsPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_1_GGM_N1N2C1_phZ_750/ --histPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_1_GGM_N1N2C1_phZ_750/ --tag GGM_N1N2C1_phZ_750
+python plotSignificance.py --plotSignal --methodsPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_1_GGM_N1N2C1_phZ_850/ --histPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_1_GGM_N1N2C1_phZ_850/ --tag GGM_N1N2C1_phZ_850
+python plotSignificance.py --plotSignal --methodsPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_1_GGM_N1N2C1_phZ_950/ --histPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_1_GGM_N1N2C1_phZ_950/ --tag GGM_N1N2C1_phZ_950
+python plotSignificance.py --plotSignal --methodsPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_1_GGM_N1N2C1_phZ_1050/ --histPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_1_GGM_N1N2C1_phZ_1050/ --tag GGM_N1N2C1_phZ_1050
+python plotSignificance.py --plotSignal --methodsPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_1_GGM_N1N2C1_phZ_1250/ --histPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_1_GGM_N1N2C1_phZ_1250/ --tag GGM_N1N2C1_phZ_1250
+python plotSignificance.py --plotSignal --methodsPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_1_GGM_N1N2C1_phZ_1450/ --histPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_1_GGM_N1N2C1_phZ_1450/ --tag GGM_N1N2C1_phZ_1450
+
+
+python plotSignificance.py --plotSignal --methodsPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_2_GGM_N1N2C1_phb_150/ --histPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_2_GGM_N1N2C1_phb_150/ --tag GGM_N1N2C1_phb_150
+python plotSignificance.py --plotSignal --methodsPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_2_GGM_N1N2C1_phb_250/ --histPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_2_GGM_N1N2C1_phb_250/ --tag GGM_N1N2C1_phb_250
+python plotSignificance.py --plotSignal --methodsPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_2_GGM_N1N2C1_phb_350/ --histPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_2_GGM_N1N2C1_phb_350/ --tag GGM_N1N2C1_phb_350
+python plotSignificance.py --plotSignal --methodsPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_2_GGM_N1N2C1_phb_450/ --histPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_2_GGM_N1N2C1_phb_450/ --tag GGM_N1N2C1_phb_450
+python plotSignificance.py --plotSignal --methodsPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_2_GGM_N1N2C1_phb_550/ --histPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_2_GGM_N1N2C1_phb_550/ --tag GGM_N1N2C1_phb_550
+python plotSignificance.py --plotSignal --methodsPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_2_GGM_N1N2C1_phb_650/ --histPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_2_GGM_N1N2C1_phb_650/ --tag GGM_N1N2C1_phb_650
+python plotSignificance.py --plotSignal --methodsPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_2_GGM_N1N2C1_phb_750/ --histPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_2_GGM_N1N2C1_phb_750/ --tag GGM_N1N2C1_phb_750
+python plotSignificance.py --plotSignal --methodsPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_2_GGM_N1N2C1_phb_850/ --histPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_2_GGM_N1N2C1_phb_850/ --tag GGM_N1N2C1_phb_850
+python plotSignificance.py --plotSignal --methodsPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_2_GGM_N1N2C1_phb_950/ --histPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_2_GGM_N1N2C1_phb_950/ --tag GGM_N1N2C1_phb_950
+python plotSignificance.py --plotSignal --methodsPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_2_GGM_N1N2C1_phb_1050/ --histPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_2_GGM_N1N2C1_phb_1050/ --tag GGM_N1N2C1_phb_1050
+python plotSignificance.py --plotSignal --methodsPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_2_GGM_N1N2C1_phb_1250/ --histPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_2_GGM_N1N2C1_phb_1250/ --tag GGM_N1N2C1_phb_1250
+python plotSignificance.py --plotSignal --methodsPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_2_GGM_N1N2C1_phb_1450/ --histPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_2_GGM_N1N2C1_phb_1450/ --tag GGM_N1N2C1_phb_1450
+
+python plotSignificance.py --plotSignal --methodsPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_2_GGM_N1N2C1_phZ_150/ --histPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_2_GGM_N1N2C1_phZ_150/ --tag GGM_N1N2C1_phZ_150
+python plotSignificance.py --plotSignal --methodsPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_2_GGM_N1N2C1_phZ_250/ --histPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_2_GGM_N1N2C1_phZ_250/ --tag GGM_N1N2C1_phZ_250
+python plotSignificance.py --plotSignal --methodsPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_2_GGM_N1N2C1_phZ_350/ --histPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_2_GGM_N1N2C1_phZ_350/ --tag GGM_N1N2C1_phZ_350
+python plotSignificance.py --plotSignal --methodsPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_2_GGM_N1N2C1_phZ_450/ --histPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_2_GGM_N1N2C1_phZ_450/ --tag GGM_N1N2C1_phZ_450
+python plotSignificance.py --plotSignal --methodsPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_2_GGM_N1N2C1_phZ_550/ --histPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_2_GGM_N1N2C1_phZ_550/ --tag GGM_N1N2C1_phZ_550
+python plotSignificance.py --plotSignal --methodsPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_2_GGM_N1N2C1_phZ_650/ --histPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_2_GGM_N1N2C1_phZ_650/ --tag GGM_N1N2C1_phZ_650
+python plotSignificance.py --plotSignal --methodsPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_2_GGM_N1N2C1_phZ_750/ --histPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_2_GGM_N1N2C1_phZ_750/ --tag GGM_N1N2C1_phZ_750
+python plotSignificance.py --plotSignal --methodsPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_2_GGM_N1N2C1_phZ_850/ --histPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_2_GGM_N1N2C1_phZ_850/ --tag GGM_N1N2C1_phZ_850
+python plotSignificance.py --plotSignal --methodsPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_2_GGM_N1N2C1_phZ_950/ --histPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_2_GGM_N1N2C1_phZ_950/ --tag GGM_N1N2C1_phZ_950
+python plotSignificance.py --plotSignal --methodsPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_2_GGM_N1N2C1_phZ_1050/ --histPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_2_GGM_N1N2C1_phZ_1050/ --tag GGM_N1N2C1_phZ_1050
+python plotSignificance.py --plotSignal --methodsPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_2_GGM_N1N2C1_phZ_1250/ --histPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_2_GGM_N1N2C1_phZ_1250/ --tag GGM_N1N2C1_phZ_1250
+python plotSignificance.py --plotSignal --methodsPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_2_GGM_N1N2C1_phZ_1450/ --histPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_2_GGM_N1N2C1_phZ_1450/ --tag GGM_N1N2C1_phZ_1450
+
+
+python plotSignificance.py --plotSignal --methodsPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_3_GGM_N1N2C1_phb_150/ --histPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_3_GGM_N1N2C1_phb_150/ --tag GGM_N1N2C1_phb_150
+python plotSignificance.py --plotSignal --methodsPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_3_GGM_N1N2C1_phb_250/ --histPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_3_GGM_N1N2C1_phb_250/ --tag GGM_N1N2C1_phb_250
+python plotSignificance.py --plotSignal --methodsPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_3_GGM_N1N2C1_phb_350/ --histPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_3_GGM_N1N2C1_phb_350/ --tag GGM_N1N2C1_phb_350
+python plotSignificance.py --plotSignal --methodsPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_3_GGM_N1N2C1_phb_450/ --histPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_3_GGM_N1N2C1_phb_450/ --tag GGM_N1N2C1_phb_450
+python plotSignificance.py --plotSignal --methodsPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_3_GGM_N1N2C1_phb_550/ --histPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_3_GGM_N1N2C1_phb_550/ --tag GGM_N1N2C1_phb_550
+python plotSignificance.py --plotSignal --methodsPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_3_GGM_N1N2C1_phb_650/ --histPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_3_GGM_N1N2C1_phb_650/ --tag GGM_N1N2C1_phb_650
+python plotSignificance.py --plotSignal --methodsPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_3_GGM_N1N2C1_phb_750/ --histPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_3_GGM_N1N2C1_phb_750/ --tag GGM_N1N2C1_phb_750
+python plotSignificance.py --plotSignal --methodsPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_3_GGM_N1N2C1_phb_850/ --histPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_3_GGM_N1N2C1_phb_850/ --tag GGM_N1N2C1_phb_850
+python plotSignificance.py --plotSignal --methodsPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_3_GGM_N1N2C1_phb_950/ --histPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_3_GGM_N1N2C1_phb_950/ --tag GGM_N1N2C1_phb_950
+python plotSignificance.py --plotSignal --methodsPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_3_GGM_N1N2C1_phb_1050/ --histPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_3_GGM_N1N2C1_phb_1050/ --tag GGM_N1N2C1_phb_1050
+python plotSignificance.py --plotSignal --methodsPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_3_GGM_N1N2C1_phb_1250/ --histPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_3_GGM_N1N2C1_phb_1250/ --tag GGM_N1N2C1_phb_1250
+python plotSignificance.py --plotSignal --methodsPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_3_GGM_N1N2C1_phb_1450/ --histPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_3_GGM_N1N2C1_phb_1450/ --tag GGM_N1N2C1_phb_1450
+
+python plotSignificance.py --plotSignal --methodsPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_3_GGM_N1N2C1_phZ_150/ --histPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_3_GGM_N1N2C1_phZ_150/ --tag GGM_N1N2C1_phZ_150
+python plotSignificance.py --plotSignal --methodsPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_3_GGM_N1N2C1_phZ_250/ --histPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_3_GGM_N1N2C1_phZ_250/ --tag GGM_N1N2C1_phZ_250
+python plotSignificance.py --plotSignal --methodsPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_3_GGM_N1N2C1_phZ_350/ --histPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_3_GGM_N1N2C1_phZ_350/ --tag GGM_N1N2C1_phZ_350
+python plotSignificance.py --plotSignal --methodsPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_3_GGM_N1N2C1_phZ_450/ --histPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_3_GGM_N1N2C1_phZ_450/ --tag GGM_N1N2C1_phZ_450
+python plotSignificance.py --plotSignal --methodsPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_3_GGM_N1N2C1_phZ_550/ --histPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_3_GGM_N1N2C1_phZ_550/ --tag GGM_N1N2C1_phZ_550
+python plotSignificance.py --plotSignal --methodsPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_3_GGM_N1N2C1_phZ_650/ --histPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_3_GGM_N1N2C1_phZ_650/ --tag GGM_N1N2C1_phZ_650
+python plotSignificance.py --plotSignal --methodsPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_3_GGM_N1N2C1_phZ_750/ --histPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_3_GGM_N1N2C1_phZ_750/ --tag GGM_N1N2C1_phZ_750
+python plotSignificance.py --plotSignal --methodsPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_3_GGM_N1N2C1_phZ_850/ --histPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_3_GGM_N1N2C1_phZ_850/ --tag GGM_N1N2C1_phZ_850
+python plotSignificance.py --plotSignal --methodsPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_3_GGM_N1N2C1_phZ_950/ --histPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_3_GGM_N1N2C1_phZ_950/ --tag GGM_N1N2C1_phZ_950
+python plotSignificance.py --plotSignal --methodsPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_3_GGM_N1N2C1_phZ_1050/ --histPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_3_GGM_N1N2C1_phZ_1050/ --tag GGM_N1N2C1_phZ_1050
+python plotSignificance.py --plotSignal --methodsPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_3_GGM_N1N2C1_phZ_1250/ --histPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_3_GGM_N1N2C1_phZ_1250/ --tag GGM_N1N2C1_phZ_1250
+python plotSignificance.py --plotSignal --methodsPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_3_GGM_N1N2C1_phZ_1450/ --histPath /eos/user/g/goorella/PhX_TMVA/trainOutput_BDT_3_GGM_N1N2C1_phZ_1450/ --tag GGM_N1N2C1_phZ_1450
+
+pdfunite /eos/user/g/goorella/plots/PhX_TMVA/*.pdf /eos/user/g/goorella/plots/PhX_TMVA/all.pdf

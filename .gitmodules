@@ -1,0 +1,3 @@
+[submodule "PlotTools"]
+	path = PlotTools
+	url = ssh://git@gitlab.cern.ch:7999/goorella/PlotTools.git

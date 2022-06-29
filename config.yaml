@@ -1,0 +1,112 @@
+# storage paths
+samplesPath: /eos/user/g/goorella/data/mini2/v210_0
+TMVAsamplesPath: /eos/user/g/goorella/data/mini2/v210_0_TMVA
+  
+trainTestSplit: # percentage of events kept for train and test. you can specify custom split for each sample, otherwise split is taken from bkg or signal
+  bkg: 5
+  signal: 50
+  photonjet: 2.
+  # ttgamma: 2.5
+  # znunugamma: 2.5
+
+samplesBkg:
+  - photonjet
+  - znunugamma
+  - zllgamma
+  - wgamma
+  - ttgamma
+  - diphoton
+  - vgammagamma
+  - higgs
+
+  - efake
+  - jfakeiso
+  # - jfakeid
+  # - jfakeiso2
+  # - jfakeid2
+
+  # - wjets
+  # - zjets
+  # - multijet
+  # - ttbar
+
+samplesSig:
+  - GGM_N1N2C1_150
+  - GGM_N1N2C1_250
+  - GGM_N1N2C1_350
+  - GGM_N1N2C1_450
+  - GGM_N1N2C1_550
+  - GGM_N1N2C1_650
+  - GGM_N1N2C1_750
+  - GGM_N1N2C1_850
+  - GGM_N1N2C1_950
+  - GGM_N1N2C1_1050
+  - GGM_N1N2C1_1250
+  - GGM_N1N2C1_1450
+
+
+sampleTF: # transfer factor obtained from the cut&count analysis
+  ttgamma: 0.8
+  tth: 0.8
+  wgamma: 0.95
+  zllgamma: 0.99
+  znunugamma: 0.99
+
+
+factoryOptions: V:AnalysisType=Classification:Correlations=True
+eventByEventWeight: weight_mc*weight_sf*weight_pu*(mcveto==0)*weight_ff  # MC and DD weights are combined since I cannot find a more elegant way to do it
+
+preselCuts: pass_g140==1 && ph_n>0 && jet_n>0 && el_n+mu_n==0 && ph_pt[0]>145 && met_et>50 && dphi_jetmet>0.4 && dphi_gammet>0.4
+
+dataSelectionOptions: ''
+# dataSelectionOptions: SplitMode=Random:SplitSeed=0
+
+dataPreparation: NormMode=EqualNumEvents:V
+# dataPreparation: ''
+
+trainVars:
+  
+  # Order is important for booking options in methods (as indexes)!!!
+  # [ntuple var, latex var, units, type]
+
+  - ['ph_pt[0]', 'p_{T}^{lead #gamma}', 'GeV', 'F']
+  - ['jet_pt[0]', 'p_{T}^{lead jet}', 'GeV', 'F']
+  - ['ht', 'H_{T}', 'GeV', 'F']
+  - ['met_et', 'E_{T}^{miss}', 'GeV', 'F']
+  - ['met_et/meff', 'E_{T}^{miss}/m_{eff}', '', 'F']
+  - ['jet_n', 'N_{jets}', '', 'I']
+  - ['dphi_jetmet', '#Delta#varphi(E_{T}^{miss}, j)', '', 'F']
+  - ['dphi_gammet', '#Delta#varphi(E_{T}^{miss}, #gamma)', '', 'F']
+  - ['dphi_gamjet', '#Delta#varphi(#gamma, j)', '', 'F']
+  - ['met_sig2', 'E_{T}^{miss} Sig (Obj)', 'GeV^{1/2}', 'F']
+  - ['mt_gam', 'M_{T}^{#gamma, E_{T}^{miss}}', 'GeV', 'F']
+  - ['st_gam := met_et+ph_pt[0]', 'S_{T}^{#gamma}', 'GeV', 'F']
+
+
+specVars:
+  
+  # Order is important for booking options in methods (as indexes)!!!
+  # [ntuple var, latex var, units]
+
+  - ['lep_n := el_n+mu_n', 'N_{lep}', '']
+  - ['ph_n', 'N_{#gamma}', '']
+  - ['rt4', 'R_{T}^{4}', '']
+  - ['meff', 'm_{eff}', 'GeV']
+  # - ['met_et/meff', 'E_{T}^{miss}/m_{eff}', '']
+  # - ['el_n', '', '']
+  # - ['mu_n', '', '']
+
+
+trainMethods:
+
+  # Methods with 'Cuts' in their name will be considered as kCuts
+  # [name, type, options]
+  - ['BDT_1', 'BDT', 'DoBoostMonitor=True:CreateMVAPdfs:VarTransform=G+D+N']
+  - ['BDT_2', 'BDT', 'DoBoostMonitor=True:CreateMVAPdfs']
+
+
+
+plotPointsMethod: 20
+
+useTestForPlotSig: True
+useTestForPlotBkg: False

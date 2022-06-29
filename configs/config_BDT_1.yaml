@@ -1,0 +1,121 @@
+# storage paths
+samplesPath: /eos/user/g/goorella/data/mini2/v174_0
+TMVAsamplesPath: /eos/user/g/goorella/data/mini2/v174_0_TMVA
+
+useTestForPlotSig: True
+useTestForPlotBkg: False
+  
+trainTestSplit: [50, 5] # [signal, background]: percentage of sample used for train and train 
+
+samplesBkg:
+  - photonjet
+  - znunugamma
+  - zllgamma
+  - wgamma
+  - ttgamma
+  - diphoton
+  - vgammagamma
+  - higgs
+
+  - wjets
+  - zjets
+  - multijet
+  - ttbar
+
+samplesSig:
+  - GGM_N1N2C1_phZ_150
+  - GGM_N1N2C1_phZ_250
+  - GGM_N1N2C1_phZ_350
+  - GGM_N1N2C1_phZ_450
+  - GGM_N1N2C1_phZ_550
+  - GGM_N1N2C1_phZ_650
+  - GGM_N1N2C1_phZ_750
+  - GGM_N1N2C1_phZ_850
+  - GGM_N1N2C1_phZ_950
+  - GGM_N1N2C1_phZ_1050
+  - GGM_N1N2C1_phZ_1250
+  - GGM_N1N2C1_phZ_1450
+
+  - GGM_N1N2C1_phb_150
+  - GGM_N1N2C1_phb_250
+  - GGM_N1N2C1_phb_350
+  - GGM_N1N2C1_phb_450
+  - GGM_N1N2C1_phb_550
+  - GGM_N1N2C1_phb_650
+  - GGM_N1N2C1_phb_750
+  - GGM_N1N2C1_phb_850
+  - GGM_N1N2C1_phb_950
+  - GGM_N1N2C1_phb_1050
+  - GGM_N1N2C1_phb_1250
+  - GGM_N1N2C1_phb_1450
+
+
+alpha: 
+  ttgamma: 1.34
+  wgamma: 0.92
+  photonjet_nnlo: 0.52
+
+
+useTotalXSForSignal: True
+
+plotPointsMethod: 20
+
+years:
+  - 20152016
+  - 2017
+  - 2018
+
+
+factoryOptions: V:AnalysisType=Classification:Correlations=True
+eventByEventWeight: weight_mc*weight_sf*weight_pu
+
+preselCuts: pass_g140==1 && ph_n>0 && jet_n>0 && el_n+mu_n==0 && ph_pt[0]>145 && met_et>50 && dphi_jetmet>0.4 && dphi_gammet>0.4 && mcveto==0
+# preselCuts: met_et>200&&ph_n==1&&jet_n>0&&el_n+mu_n==0&&mcveto==0&&dphi_jetmet>0.4&&dphi_gammet>0.4&&pass_xe==1&&mcveto==0
+
+dataSelectionOptions: ''
+# dataSelectionOptions: SplitMode=Random:SplitSeed=0
+
+# dataPreparation: ''
+dataPreparation: NormMode=EqualNumEvents:V
+
+trainVars:
+  
+  # Order is important for booking options in methods (as indexes)!!!
+  # [ntuple var, latex var, units, type]
+
+  - ['ph_pt[0]', 'p_{T}^{lead #gamma}', 'GeV', 'F']
+  - ['jet_pt[0]', 'p_{T}^{lead jet}', 'GeV', 'F']
+  - ['ht', 'H_{T}', 'GeV', 'F']
+  - ['met_et', 'E_{T}^{miss}', 'GeV', 'F']
+  - ['met_et/meff', 'E_{T}^{miss}/m_{eff}', '', 'F']
+  - ['jet_n', 'N_{jets}', '', 'I']
+  - ['dphi_jetmet', '#Delta#varphi(E_{T}^{miss}, j)', '', 'F']
+  - ['dphi_gammet', '#Delta#varphi(E_{T}^{miss}, #gamma)', '', 'F']
+  - ['dphi_gamjet', '#Delta#varphi(#gamma, j)', '', 'F']
+  - ['met_sig2', 'E_{T}^{miss} Sig (Obj)', 'GeV^{1/2}', 'F']
+  - ['mt_gam', 'M_{T}^{#gamma, E_{T}^{miss}}', 'GeV', 'F']
+  - ['st_gam := met_et+ph_pt[0]', 'S_{T}^{#gamma}', 'GeV', 'F']
+
+
+specVars:
+  
+  # Order is important for booking options in methods (as indexes)!!!
+  # [ntuple var, latex var, units]
+
+  - ['lep_n := el_n+mu_n', 'N_{lep}', '']
+  - ['ph_n', 'N_{#gamma}', '']
+  - ['rt4', 'R_{T}^{4}', '']
+  - ['meff', 'm_{eff}', 'GeV']
+  # - ['met_et/meff', 'E_{T}^{miss}/m_{eff}', '']
+  # - ['el_n', '', '']
+  # - ['mu_n', '', '']
+
+
+trainMethods:
+
+  # Methods with 'Cuts' in their name will be considered as kCuts
+  # [name, type, options]
+  - ['BDT_v1_1', 'BDT', 'DoBoostMonitor=True:CreateMVAPdfs:VarTransform=G+D+N']
+  - ['BDT_v1_2', 'BDT', 'DoBoostMonitor=True:CreateMVAPdfs']
+  - ['BDT_v1_3', 'BDT', 'DoBoostMonitor=True:CreateMVAPdfs:MaxDepth=4']
+  - ['BDT_v1_4', 'BDT', 'DoBoostMonitor=True:CreateMVAPdfs:VarTransform=G+D+N:MaxDepth=4:SeparationType=SDivSqrtSPlusB']
