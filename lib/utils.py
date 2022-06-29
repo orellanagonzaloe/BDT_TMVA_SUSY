@@ -66,7 +66,7 @@ def reweight_event(br_y, br_Z, br_h):
 def presel_cut(cuts):
 
 	def_func = """
-	bool preselCuts(Int_t pass_g140, Int_t pass_xe, Int_t mcveto, Int_t ph_n, Int_t el_n, Int_t mu_n, Int_t jet_n, std::vector<float> * ph_pt, Float_t met_et, Float_t dphi_jetmet, Float_t dphi_gammet, Float_t dphi_gamjet){
+	bool preselCuts(Int_t pass_g140, Int_t mcveto, Int_t ph_n, Int_t el_n, Int_t mu_n, Int_t jet_n, std::vector<float> * ph_pt, Float_t met_et, Float_t dphi_jetmet, Float_t dphi_gammet, Float_t dphi_gamjet){
 		if (%s) return true;
 		return false;
 	}

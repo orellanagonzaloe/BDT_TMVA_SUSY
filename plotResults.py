@@ -18,7 +18,7 @@ import plotFunc as PTf
 import classes as PTc
 
 
-def retrieveHistos(methodsPath, histPath, cfg, trainCfg):
+def retrieveHistos(methodsPath, years, trainCfg):
 
 	d_passEvents = {}
 	TG_sig = {}
@@ -30,7 +30,7 @@ def retrieveHistos(methodsPath, histPath, cfg, trainCfg):
 		TG_sig[method[0]] = {}
 		h_method[method[0]] = {}
 
-		for sam in cfg['samplesBkg'] + cfg['samplesSig']:
+		for sam in trainCfg['samplesBkg'] + trainCfg['samplesSig']:
 
 			d_passEvents[method[0]][sam] = [0.] * trainCfg['plotPointsMethod']
 
@@ -45,15 +45,15 @@ def retrieveHistos(methodsPath, histPath, cfg, trainCfg):
 
 		h_method[method[0]]['total_bkg'] = ROOT.TH1D('%s_total_bkg' % (method[0]), '%s_total_bkg' % (method[0]), trainCfg['plotPointsMethod'], start, end)
 
-		for sam in cfg['samplesBkg']:
+		for sam in trainCfg['samplesBkg']:
 
 			h_method[method[0]][sam] = ROOT.TH1D('%s_%s' % (method[0], sam), '%s_%s' % (method[0], sam), trainCfg['plotPointsMethod'], start, end)
 
 			d_passEvents[method[0]][sam] = [0.] * trainCfg['plotPointsMethod']
 
-			for year in cfg['years']:
+			for year in years:
 
-				output_sam_file = ROOT.TFile('%s/h_pass_%s_%s.root' % (histPath, sam, year), 'READ')
+				output_sam_file = ROOT.TFile('%s/h_pass_%s_%s.root' % (methodsPath, sam, year), 'READ')
 				h_pass_tmp = output_sam_file.Get('h_passEvents')
 				h_pass_tmp.SetDirectory(0)
 
@@ -70,7 +70,7 @@ def retrieveHistos(methodsPath, histPath, cfg, trainCfg):
 
 
 
-		for sam in cfg['samplesSig']:
+		for sam in trainCfg['samplesSig']:
 
 			h_method[method[0]][sam] = ROOT.TH1D('%s_%s' % (method[0], sam), '%s_%s' % (method[0], sam), trainCfg['plotPointsMethod'], start, end)
 
@@ -78,9 +78,9 @@ def retrieveHistos(methodsPath, histPath, cfg, trainCfg):
 
 			d_passEvents[method[0]][sam] = [0.] * trainCfg['plotPointsMethod']
 
-			for year in cfg['years']:
+			for year in years:
 
-				output_sam_file = ROOT.TFile('%s/h_pass_%s_%s.root' % (histPath, sam, year), 'READ')
+				output_sam_file = ROOT.TFile('%s/h_pass_%s_%s.root' % (methodsPath, sam, year), 'READ')
 				h_pass_tmp = output_sam_file.Get('h_passEvents')
 				h_pass_tmp.SetDirectory(0)
 
@@ -118,7 +118,7 @@ def retrieveHistos(methodsPath, histPath, cfg, trainCfg):
 	return d_passEvents, TG_sig, h_method
 
 
-def plotSignificance(TG_sig, method, methodsPath, cfg, trainCfg, outputDirPlots):
+def plotSignificance(TG_sig, method, methodsPath, trainCfg, outputDirPlots):
 
 	canvas = ROOT.TCanvas('canvas','canvas', 0, 0, 800, 600)
 
@@ -216,7 +216,7 @@ def plotSignificance(TG_sig, method, methodsPath, cfg, trainCfg, outputDirPlots)
 	canvas.Print('%s/%s' % (outputDirPlots, plot_name))
 
 
-def plotStack(method, h_samples, cfg, trainCfg, outputDirPlots):
+def plotStack(method, h_samples, trainCfg, outputDirPlots):
 
 	pconfig = PTc.PlotConfig()
 
@@ -258,7 +258,7 @@ def plotStack(method, h_samples, cfg, trainCfg, outputDirPlots):
 	l_po = []
 	
 	# bkg histograms
-	for s in cfg['samplesBkg']:
+	for s in trainCfg['samplesBkg']:
 
 		color_tmp = '#000000'
 		if s in sty.colors_dict:
@@ -314,12 +314,12 @@ def plotStack(method, h_samples, cfg, trainCfg, outputDirPlots):
 
 	color_list = ['#1cd759', '#84c915', '#b9b600', '#e49e00', '#ff811b', '#ff614e', '#ff467c', '#ff41ac', '#e755d9']
 
-	for i_index, s in enumerate(cfg['samplesSig']):
+	for i_index, s in enumerate(trainCfg['samplesSig']):
 
 		if any(['_1050' in s, '_1250' in s, '_1450' in s]): continue
 
 		if 'phb' in s:
-			color_tmp = color_list[i_index-len(cfg['samplesSig'])/2]
+			color_tmp = color_list[i_index-len(trainCfg['samplesSig'])/2]
 		else:
 			color_tmp = color_list[i_index]
 
@@ -371,7 +371,7 @@ def plotStack(method, h_samples, cfg, trainCfg, outputDirPlots):
 	PTf.plotMain(l_po, pconfig)
 
 
-def plotTMVAgraphs(methodsPath, cfg, trainCfg, outputDirPlots):
+def plotTMVAgraphs(methodsPath, trainCfg, outputDirPlots):
 
 
 	inputFile = '%s/%s.root' % (methodsPath, trainCfg['tag'])
@@ -416,15 +416,15 @@ def plotTMVAgraphs(methodsPath, cfg, trainCfg, outputDirPlots):
 	os.system('rm -r %s' % dirName)
 
 
-def bkgComp(d_samples, method, methodOut, cfg, trainCfg):
+def bkgComp(d_samples, method, methodOut, trainCfg):
 
 	start = utils.methodsRange[method[1]][0]
 
 	end = utils.methodsRange[method[1]][1]
 
-	for sam in cfg['samplesBkg']+cfg['samplesSig']:
+	for sam in trainCfg['samplesBkg']+trainCfg['samplesSig']:
 
-		index = int((methodOut - start) * trainCfg['plotPointsMethod'] / (end - start))
+		index = int((methodOut - start) *  (end - start))
 
 		print sam, d_samples[sam][index]
 
@@ -443,17 +443,10 @@ parser.add_argument('--plotSignificance', action='store_true')
 parser.add_argument('--plotTMVA', action='store_true')
 parser.add_argument('--plotMethods', action='store_true')
 parser.add_argument('--methodsPath', dest='methodsPath', type=str, default=None)
-parser.add_argument('--tag', dest='tag', type=str, default=None)
 parser.add_argument('--outputDirPlots', dest='outputDirPlots', type=str, default='/eos/user/g/goorella/plots/PhX_TMVA/')
-parser.add_argument('--histPath', dest='histPath', type=str, default=None)
-parser.add_argument('--config', dest='config', type=str, default='config.yaml')
+parser.add_argument('--year', dest='year', nargs='+', default=['2015', '2016', '2017', '2018'])
 
 args = parser.parse_args()
-
-if args.histPath == None: args.histPath = args.methodsPath
-
-with open('%s' % (args.config), 'r') as f:
-	cfg = yaml.safe_load(f)
 
 with open('%s/config.yaml' % (args.methodsPath), 'r') as f:
 	trainCfg = yaml.safe_load(f)
@@ -461,20 +454,22 @@ with open('%s/config.yaml' % (args.methodsPath), 'r') as f:
 if not os.path.exists(args.outputDirPlots):
 	os.makedirs(args.outputDirPlots)
 
-
 if args.plotSignificance:
 
-	d_passEvents, TG_sig, h_method = retrieveHistos(args.methodsPath, args.histPath, cfg, trainCfg)
+	d_passEvents, TG_sig, h_method = retrieveHistos(args.methodsPath, args.year, trainCfg)
 
 	for method in trainCfg['trainMethods']:
 
-		plotSignificance(TG_sig, method, args.methodsPath, cfg, trainCfg, args.outputDirPlots)
+		plotSignificance(TG_sig, method, args.methodsPath, trainCfg, args.outputDirPlots)
 
-		plotStack(method, h_method[method[0]], cfg, trainCfg, args.outputDirPlots)
+		plotStack(method, h_method[method[0]], trainCfg, args.outputDirPlots)
 
-		# bkgComp(d_passEvents[method[0]], method, 0.315, cfg, trainCfg)
+		# bkgComp(d_passEvents[method[0]], method, 0.315, trainCfg)
 
+# if args.plotMethods:
+
+	# plotMethodsComparison to do...
 
 if args.plotTMVA:
 
-	plotTMVAgraphs(args.methodsPath, cfg, trainCfg, args.outputDirPlots)
+	plotTMVAgraphs(args.methodsPath, trainCfg, args.outputDirPlots)

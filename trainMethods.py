@@ -83,31 +83,33 @@ else:
 	samplePath = cfg['samplesPath']
 	dataPreparation = ':'.join([cfg['dataSelectionOptions'], cfg['dataPreparation']])
 
-samplesSig = [x for x in cfg['samplesSig'] for y in args.mN1 if y == x.split('_')[-1]]
+sigForTrain = [x for x in cfg['sigForTrain'] for y in args.mN1 if y == x.split('_')[-1]]
 
-for sample in cfg['samplesBkg'] + samplesSig:
+for sample in cfg['samplesBkg'] + sigForTrain:
 
-	if sample in samplesSig:
+	if sample in sigForTrain:
 		utils.reweight_event(BR_y, BR_Z, BR_h)
 
 	for sampleType in types:
 
-		for sampleSlice in sam.samples_dict[sample]:
+		for year in args.years:
 
-			for year in args.years:
+			for sampleSlice in sam.samples_dict[sample]:
 
-				printMsg('Adding %s %s %s' % (sample, sampleType, year), 0)
+				printMsg('Adding %s %s %s' % (sample, year, sampleType), 0)
 
-				globDir = '%s/%s*%s*_%s/*.root*' % (samplePath, sampleSlice, utils.campaign_tag[year], sampleType)
-				samplesFiles = glob.glob(globDir)
+				globFiles = '%s/%s*%s*_%s/*.root*' % (samplePath, sampleSlice, utils.campaign_tag[year], sampleType)
+				samplesFiles = glob.glob(globFiles)
 
 				if len(samplesFiles)<1:
-					printMsg('Empty sample %s' % globDir, 1)
+					printMsg('Empty sample %s' % globFiles, 1)
 					continue
 
 				sampleTree = ROOT.TChain('mini')
 
-				for index, file in enumerate(samplesFiles):
+				sumw = 0.
+
+				for file in samplesFiles:
 
 					rootFile = ROOT.TFile.Open(file)
 
@@ -120,30 +122,20 @@ for sample in cfg['samplesBkg'] + samplesSig:
 
 					sampleTree.Add(file)
 
-					tmp_sumw = rootFile.Get('events')
-
-					if index == 0:
-
-						h_events = tmp_sumw
-						h_events.SetDirectory(0)
-
-					else:
-
-						h_events.Add(tmp_sumw)
+					sumw += rootFile.Get('events').GetBinContent(3) # bin 3 is the initial sumw
 
 					rootFile.Close()
 
 				if sampleTree.GetEntries()<1:
-					printMsg('%s: has 0 events, skipping...' % globDir, 1)
+					printMsg('%s: has 0 events, skipping...' % globFiles, 1)
 					continue
 
 				weight = 1.
 
-				if not cfg.isdata(sample):
+				if not utils.isdata(sample):
 
 					DID = sampleSlice.split('.')[1]
 					xs = xsu.get_xs_from_did(int(DID))
-					sumw = h_events.GetBinContent(3) # bin 3 is the initial sumw
 
 					weight = (utils.lumi_dict[year] * xs) / sumw
 

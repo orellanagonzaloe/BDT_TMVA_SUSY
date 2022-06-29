@@ -47,3 +47,26 @@ The script will read the following arguments from the configfile
 The trained methods are stored in:
 
 ## Plots 
+
+Plots are managed with the `plotResults.py` using the following arguments:
+
+	--methodsPath: output directory of the methods training
+	--outputDirPlots: directory to save the plots
+
+To retrieve the TMVA plots use it with the following flag
+
+	--plotTMVA
+
+To create the plots as a function of the method output first you need to run `evaluateMethodSig.py`
+
+	--nPoints: number of values evaluated for each method output 
+
+
+Then run `plotResults.py` with 
+
+	--plotSignificance: creates plots of significance and background composition as a function of each method output
+	--plotMethods: under construciton
+	--year: years of datasets 
+
+
+
