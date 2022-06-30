@@ -6,6 +6,8 @@ trainTestSplit: # percentage of events kept for train and test. you can specify 
   bkg: 5
   signal: 50
   photonjet: 2.
+  efake: 50
+  jfakeiso: 50
   # ttgamma: 2.5
   # znunugamma: 2.5
 
@@ -78,7 +80,7 @@ trainVars:
   - ['dphi_jetmet', '#Delta#varphi(E_{T}^{miss}, j)', '', 'F']
   - ['dphi_gammet', '#Delta#varphi(E_{T}^{miss}, #gamma)', '', 'F']
   - ['dphi_gamjet', '#Delta#varphi(#gamma, j)', '', 'F']
-  - ['met_sig2', 'E_{T}^{miss} Sig (Obj)', 'GeV^{1/2}', 'F']
+  - ['met_sig_obj', 'E_{T}^{miss} Sig (Obj)', 'GeV^{1/2}', 'F']
   - ['mt_gam', 'M_{T}^{#gamma, E_{T}^{miss}}', 'GeV', 'F']
   - ['st_gam := met_et+ph_pt[0]', 'S_{T}^{#gamma}', 'GeV', 'F']
 

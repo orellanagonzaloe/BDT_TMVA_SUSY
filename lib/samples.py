@@ -252,32 +252,18 @@ samples_dict = {
         'mc16_13TeV.426142.Sherpa_CT10_jets_JZ12',
     ],
 
-    'GGM_N1N2C1_phZ_150' : ['mc16_13TeV.507358.MGPy8EG_A14NNPDF23LO_GGM_N1N2C1_150'],
-    'GGM_N1N2C1_phZ_250' : ['mc16_13TeV.507359.MGPy8EG_A14NNPDF23LO_GGM_N1N2C1_250'],
-    'GGM_N1N2C1_phZ_350' : ['mc16_13TeV.507360.MGPy8EG_A14NNPDF23LO_GGM_N1N2C1_350'],
-    'GGM_N1N2C1_phZ_450' : ['mc16_13TeV.507361.MGPy8EG_A14NNPDF23LO_GGM_N1N2C1_450'],
-    'GGM_N1N2C1_phZ_550' : ['mc16_13TeV.507362.MGPy8EG_A14NNPDF23LO_GGM_N1N2C1_550'],
-    'GGM_N1N2C1_phZ_650' : ['mc16_13TeV.507363.MGPy8EG_A14NNPDF23LO_GGM_N1N2C1_650'],
-    'GGM_N1N2C1_phZ_750' : ['mc16_13TeV.507364.MGPy8EG_A14NNPDF23LO_GGM_N1N2C1_750'],
-    'GGM_N1N2C1_phZ_850' : ['mc16_13TeV.507365.MGPy8EG_A14NNPDF23LO_GGM_N1N2C1_850'],
-    'GGM_N1N2C1_phZ_950' : ['mc16_13TeV.507366.MGPy8EG_A14NNPDF23LO_GGM_N1N2C1_950'],
-    'GGM_N1N2C1_phZ_1050' : ['mc16_13TeV.507367.MGPy8EG_A14NNPDF23LO_GGM_N1N2C1_1050'],
-    'GGM_N1N2C1_phZ_1250' : ['mc16_13TeV.507368.MGPy8EG_A14NNPDF23LO_GGM_N1N2C1_1250'],
-    'GGM_N1N2C1_phZ_1450' : ['mc16_13TeV.507369.MGPy8EG_A14NNPDF23LO_GGM_N1N2C1_1450'],
-
-    'GGM_N1N2C1_phb_150' : ['mc16_13TeV.507358.MGPy8EG_A14NNPDF23LO_GGM_N1N2C1_150'],
-    'GGM_N1N2C1_phb_250' : ['mc16_13TeV.507359.MGPy8EG_A14NNPDF23LO_GGM_N1N2C1_250'],
-    'GGM_N1N2C1_phb_350' : ['mc16_13TeV.507360.MGPy8EG_A14NNPDF23LO_GGM_N1N2C1_350'],
-    'GGM_N1N2C1_phb_450' : ['mc16_13TeV.507361.MGPy8EG_A14NNPDF23LO_GGM_N1N2C1_450'],
-    'GGM_N1N2C1_phb_550' : ['mc16_13TeV.507362.MGPy8EG_A14NNPDF23LO_GGM_N1N2C1_550'],
-    'GGM_N1N2C1_phb_650' : ['mc16_13TeV.507363.MGPy8EG_A14NNPDF23LO_GGM_N1N2C1_650'],
-    'GGM_N1N2C1_phb_750' : ['mc16_13TeV.507364.MGPy8EG_A14NNPDF23LO_GGM_N1N2C1_750'],
-    'GGM_N1N2C1_phb_850' : ['mc16_13TeV.507365.MGPy8EG_A14NNPDF23LO_GGM_N1N2C1_850'],
-    'GGM_N1N2C1_phb_950' : ['mc16_13TeV.507366.MGPy8EG_A14NNPDF23LO_GGM_N1N2C1_950'],
-    'GGM_N1N2C1_phb_1050' : ['mc16_13TeV.507367.MGPy8EG_A14NNPDF23LO_GGM_N1N2C1_1050'],
-    'GGM_N1N2C1_phb_1250' : ['mc16_13TeV.507368.MGPy8EG_A14NNPDF23LO_GGM_N1N2C1_1250'],
-    'GGM_N1N2C1_phb_1450' : ['mc16_13TeV.507369.MGPy8EG_A14NNPDF23LO_GGM_N1N2C1_1450'],
-
+    'GGM_N1N2C1_150' : ['mc16_13TeV.507358.MGPy8EG_A14NNPDF23LO_GGM_N1N2C1_150'],
+    'GGM_N1N2C1_250' : ['mc16_13TeV.507359.MGPy8EG_A14NNPDF23LO_GGM_N1N2C1_250'],
+    'GGM_N1N2C1_350' : ['mc16_13TeV.507360.MGPy8EG_A14NNPDF23LO_GGM_N1N2C1_350'],
+    'GGM_N1N2C1_450' : ['mc16_13TeV.507361.MGPy8EG_A14NNPDF23LO_GGM_N1N2C1_450'],
+    'GGM_N1N2C1_550' : ['mc16_13TeV.507362.MGPy8EG_A14NNPDF23LO_GGM_N1N2C1_550'],
+    'GGM_N1N2C1_650' : ['mc16_13TeV.507363.MGPy8EG_A14NNPDF23LO_GGM_N1N2C1_650'],
+    'GGM_N1N2C1_750' : ['mc16_13TeV.507364.MGPy8EG_A14NNPDF23LO_GGM_N1N2C1_750'],
+    'GGM_N1N2C1_850' : ['mc16_13TeV.507365.MGPy8EG_A14NNPDF23LO_GGM_N1N2C1_850'],
+    'GGM_N1N2C1_950' : ['mc16_13TeV.507366.MGPy8EG_A14NNPDF23LO_GGM_N1N2C1_950'],
+    'GGM_N1N2C1_1050' : ['mc16_13TeV.507367.MGPy8EG_A14NNPDF23LO_GGM_N1N2C1_1050'],
+    'GGM_N1N2C1_1250' : ['mc16_13TeV.507368.MGPy8EG_A14NNPDF23LO_GGM_N1N2C1_1250'],
+    'GGM_N1N2C1_1450' : ['mc16_13TeV.507369.MGPy8EG_A14NNPDF23LO_GGM_N1N2C1_1450'],
 }
 
 samples_dict['efake15'] = [i.replace('data15_13TeV', 'efake15') for i in samples_dict['data15']]
@@ -304,3 +290,9 @@ samples_dict['jfakeid215'] = [i.replace('data15_13TeV', 'jfakeid215') for i in s
 samples_dict['jfakeid216'] = [i.replace('data16_13TeV', 'jfakeid216') for i in samples_dict['data16']]
 samples_dict['jfakeid217'] = [i.replace('data17_13TeV', 'jfakeid217') for i in samples_dict['data17']]
 samples_dict['jfakeid218'] = [i.replace('data18_13TeV', 'jfakeid218') for i in samples_dict['data18']]
+
+samples_dict['efake'] = samples_dict['efake15'] + samples_dict['efake16'] + samples_dict['efake17'] + samples_dict['efake18']
+samples_dict['jfakeiso'] = samples_dict['jfakeiso15'] + samples_dict['jfakeiso16'] + samples_dict['jfakeiso17'] + samples_dict['jfakeiso18']
+samples_dict['jfakeid'] = samples_dict['jfakeid15'] + samples_dict['jfakeid16'] + samples_dict['jfakeid17'] + samples_dict['jfakeid18']
+samples_dict['jfakeiso2'] = samples_dict['jfakeiso215'] + samples_dict['jfakeiso216'] + samples_dict['jfakeiso217'] + samples_dict['jfakeiso218']
+samples_dict['jfakeid2'] = samples_dict['jfakeid215'] + samples_dict['jfakeid216'] + samples_dict['jfakeid217'] + samples_dict['jfakeid218']

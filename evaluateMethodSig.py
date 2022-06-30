@@ -102,7 +102,7 @@ for sample in samplesBkg + samplesSig:
 			sampleDir = glob.glob(samplePath)
 
 			if len(sampleDir) != 1:
-				printMsj('Empty sample %s' % samplePath, 1)
+				printMsg('Empty sample %s' % samplePath, 1)
 				continue
 
 			sampleDir = sampleDir[0]

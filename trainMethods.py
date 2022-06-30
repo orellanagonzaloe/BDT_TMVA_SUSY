@@ -13,7 +13,7 @@ import ROOT
 import samples as sam
 import xsutils as xsu
 import utils as utils
-from utils import printMsj
+from utils import printMsg
 
 parser = argparse.ArgumentParser()
 
@@ -35,12 +35,7 @@ printMsg('Tag: %s' % args.tag, 0)
 
 #--- initialization
 
-if '2015' and '2016' in args.year:
-	args.year.remove('2015')
-	args.year.remove('2016')
-	args.year.insert(0, '20152016')
-
-tag = '%s_%s_%s_%s'% (args.tag, '_'.join(args.mN1), '_'.join(args.BRs))
+tag = '%s_%s_%s'% (args.tag, '_'.join(args.mN1), '_'.join(args.BRs))
 
 with open(args.config, 'r') as f:
 	cfg = yaml.safe_load(f)
@@ -61,7 +56,8 @@ with open('%s/config.yaml' % (outputDir), 'w+') as f:
 outputFilename = '%s/%s.root' % (outputDir, tag)
 outFile = ROOT.TFile(outputFilename, 'RECREATE')
 
-BR_y, BR_Z, BR_h = args.BRs[0], args.BRs[1], args.BRs[2]
+BR_y, BR_Z, BR_h = float(args.BRs[0]), float(args.BRs[1]), float(args.BRs[2])
+utils.reweight_event(BR_y, BR_Z, BR_h)
 
 #--- factory
 
@@ -83,22 +79,37 @@ else:
 	samplePath = cfg['samplesPath']
 	dataPreparation = ':'.join([cfg['dataSelectionOptions'], cfg['dataPreparation']])
 
-sigForTrain = [x for x in cfg['sigForTrain'] for y in args.mN1 if y == x.split('_')[-1]]
+sigForTrain = [x for x in cfg['samplesSig'] for y in args.mN1 if y == x.split('_')[-1]]
 
-for sample in cfg['samplesBkg'] + sigForTrain:
 
-	if sample in sigForTrain:
-		utils.reweight_event(BR_y, BR_Z, BR_h)
+for sampleType in types:
 
-	for sampleType in types:
+	for sample in cfg['samplesBkg'] + sigForTrain:
 
-		for year in args.years:
+		years = args.year
 
-			for sampleSlice in sam.samples_dict[sample]:
+		if not utils.isdata(sample) and '2015'  in years and '2016' in years:
+			years.remove('2015')
+			years.remove('2016')
+			years.insert(0, '20152016')
 
-				printMsg('Adding %s %s %s' % (sample, year, sampleType), 0)
+		for year in years:
+
+			printMsg('Adding %s %s %s' % (sample, year, sampleType), 0)
+
+			_sample = sample
+
+			if utils.isdata(sample):
+
+				_sample = '%s%s' % (sample, year[-2:])
+
+			for sampleSlice in sam.samples_dict[_sample]:
 
 				globFiles = '%s/%s*%s*_%s/*.root*' % (samplePath, sampleSlice, utils.campaign_tag[year], sampleType)
+
+				if utils.isdata(sample):
+					globFiles = '%s/%s*_%s/*.root*' % (samplePath, sampleSlice, sampleType)
+
 				samplesFiles = glob.glob(globFiles)
 
 				if len(samplesFiles)<1:
@@ -174,18 +185,18 @@ for var in cfg['specVars']:
 
 #--- Preselection
 
-prinMsg('Add preselection cuts and prepare data', 0)
+printMsg('Add preselection cuts and prepare data', 0)
 
 dataloader.PrepareTrainingAndTestTree(cfg['preselCuts'].strip(), dataPreparation)
 
 
 #--- Method specification
 
-prinMsg('Book methods', 0)
+printMsg('Book methods', 0)
 
 for method in cfg['trainMethods']:
 
-	prinMsg('Adding %s...' % method[0], 0)
+	printMsg('Adding %s...' % method[0], 0)
 
 	factory.BookMethod(dataloader, utils.trainMethods[method[1]], method[0], method[2])
 
@@ -197,7 +208,7 @@ for method in cfg['trainMethods']:
 
 #--- Training and Evaluation
 
-prinMsg('Train, test and evaluate methods', 0)
+printMsg('Train, test and evaluate methods', 0)
 
 factory.TrainAllMethods()
 factory.TestAllMethods()

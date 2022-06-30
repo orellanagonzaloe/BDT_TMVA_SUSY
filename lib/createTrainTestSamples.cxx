@@ -115,8 +115,6 @@ void createTrainTestSamples(TString inputdir, TString outputdir, float trainTest
 	std::vector<float> *ph_pt = 0, *ph_eta = 0, *ph_phi = 0, *jet_pt = 0;
 
 	chain.SetBranchAddress("pass_g140", &pass_g140);
-	chain.SetBranchAddress("mcveto", &mcveto);
-	chain.SetBranchAddress("n1decays", &n1decays);
 	if (!isdata)
 	{
 		chain.SetBranchAddress("mcveto", &mcveto);

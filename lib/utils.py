@@ -1,6 +1,6 @@
 import ROOT
 
-def printMsj(msj, level):
+def printMsg(msj, level):
 
 	color = ['[1;92mINFO', '[1;93mWARNING', '[1;91mERROR']
 
@@ -144,30 +144,9 @@ methodsRange = {
 
 def isdata(sample):
 
-	if  'data15' in sample or \
-		'data16' in sample or \
-		'data17' in sample or \
-		'data18' in sample or \
-		'efake15' in sample or \
-		'efake16' in sample or \
-		'efake17' in sample or \
-		'efake18' in sample or \
-		'jfakeiso15' in sample or \
-		'jfakeiso16' in sample or \
-		'jfakeiso17' in sample or \
-		'jfakeiso18' in sample or \
-		'jfakeiso215' in sample or \
-		'jfakeiso216' in sample or \
-		'jfakeiso217' in sample or \
-		'jfakeiso218' in sample or \
-		'jfakeid15' in sample or \
-		'jfakeid16' in sample or \
-		'jfakeid17' in sample or \
-		'jfakeid18' in sample or \
-		'jfakeid215' in sample or \
-		'jfakeid216' in sample or \
-		'jfakeid217' in sample or \
-		'jfakeid218' in sample:
+	if  'data' in sample or \
+		'efake' in sample or \
+		'jfake' in sample:
 
 		return True
 

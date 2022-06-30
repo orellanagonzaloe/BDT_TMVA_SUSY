@@ -7,7 +7,7 @@ import glob
 import ROOT
 
 import samples as sam
-from utils import printMsj
+from utils import printMsg
 
 
 parser = argparse.ArgumentParser()
@@ -25,7 +25,7 @@ samplesPath = cfg['samplesPath']
 
 for sample in cfg['samplesBkg']+cfg['samplesSig']:
 
-	printMsj('Sample: %s' % (sample), 0)
+	printMsg('Sample: %s' % (sample), 0)
 
 	if sample in cfg['trainTestSplit']: 
 
@@ -39,7 +39,7 @@ for sample in cfg['samplesBkg']+cfg['samplesSig']:
 
 		trainTestSplit = cfg['trainTestSplit']['bkg']
 
-	printMsj('trainTestSplit: %d%%' % (trainTestSplit), 0)
+	printMsg('trainTestSplit: %d%%' % (trainTestSplit), 0)
 
 	for sampleSlice in sam.samples_dict[sample]:
 
