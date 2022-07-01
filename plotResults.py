@@ -468,7 +468,7 @@ if args.plotSignificance:
 
 # if args.plotMethods:
 
-	# plotMethodsComparison to do...
+	# plotMethodsComparison() to do...
 
 if args.plotTMVA:
 

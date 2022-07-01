@@ -74,6 +74,15 @@ def presel_cut(cuts):
 
 	ROOT.gInterpreter.Declare(def_func)
 
+def define_weights(weights):
+
+	def_func = """
+	float defineWeights(Float_t weight_mc, Float_t weight_sf, Float_t weight_pu, Int_t mcveto, Float_t weight_ff){
+		return %s;
+	}
+	""" % (weights)
+
+	ROOT.gInterpreter.Declare(def_func)
 
 lumi_dict = {
 	'2015': 3219.56,
@@ -120,7 +129,7 @@ trainMethods = {
 	'PyAdaBoost': ROOT.TMVA.Types.kPyAdaBoost,
 	'PyGTB': ROOT.TMVA.Types.kPyGTB,
 	'PyKeras': ROOT.TMVA.Types.kPyKeras,
-	'PyTorch': ROOT.TMVA.Types.kPyTorch,
+	# 'PyTorch': ROOT.TMVA.Types.kPyTorch,
 	'C50': ROOT.TMVA.Types.kC50,
 	'RSNNS': ROOT.TMVA.Types.kRSNNS,
 	'RSVM': ROOT.TMVA.Types.kRSVM,

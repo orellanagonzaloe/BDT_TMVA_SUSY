@@ -12,14 +12,14 @@ trainTestSplit: # percentage of events kept for train and test. you can specify 
   # znunugamma: 2.5
 
 samplesBkg:
-  - photonjet
-  - znunugamma
-  - zllgamma
-  - wgamma
-  - ttgamma
-  - diphoton
-  - vgammagamma
-  - higgs
+  # - photonjet
+  # - znunugamma
+  # - zllgamma
+  # - wgamma
+  # - ttgamma
+  # - diphoton
+  # - vgammagamma
+  # - higgs
 
   - efake
   - jfakeiso
@@ -110,3 +110,22 @@ trainMethods:
 
 useTestForPlotSig: True
 useTestForPlotBkg: False
+
+samplesWithTestSample:
+  - efake
+  - jfakeiso
+  - jfakeid
+  - jfakeiso2
+  - jfakeid2
+  - GGM_N1N2C1_150
+  - GGM_N1N2C1_250
+  - GGM_N1N2C1_350
+  - GGM_N1N2C1_450
+  - GGM_N1N2C1_550
+  - GGM_N1N2C1_650
+  - GGM_N1N2C1_750
+  - GGM_N1N2C1_850
+  - GGM_N1N2C1_950
+  - GGM_N1N2C1_1050
+  - GGM_N1N2C1_1250
+  - GGM_N1N2C1_1450

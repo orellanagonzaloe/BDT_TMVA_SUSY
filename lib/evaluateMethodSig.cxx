@@ -5,32 +5,6 @@ double method_cut(int step, double start, double end, double npoints) {
 	return start + (end-start)*step/npoints;
 }
 
-// double reweight_event(bool isSignal, bool isPhZ, int n1decays) {
-
-// 	if (!isSignal) return 1.;
-
-// 	else if (isPhZ) {
-// 		if (n1decays == 1) return 9./4.; // phph event
-// 		if (n1decays == 2) return 9./4.; // phZ event
-// 		if (n1decays == 3) return 0.; // phh event
-// 		if (n1decays == 4) return 9./4.; // ZZ event
-// 		if (n1decays == 5) return 0.; // Zh event
-// 		if (n1decays == 6) return 0.; // hh event
-// 		cout<<"N1 decay not recognised: "<<n1decays<<endl;
-// 		return 0.;
-// 	}
-// 	else {
-// 		if (n1decays == 1) return 9./4.; // phph event
-// 		if (n1decays == 2) return 0.; // phZ event
-// 		if (n1decays == 3) return 9./4.; // phh event
-// 		if (n1decays == 4) return 0.; // ZZ event
-// 		if (n1decays == 5) return 0.; // Zh event
-// 		if (n1decays == 6) return 9./4.; // hh event
-// 		cout<<"N1 decay not recognised: "<<n1decays<<endl;
-// 		return 0.;
-// 	}
-
-// }
 
 void evaluateMethodSig(TH2D *h_passEvents, TString sampleDir, TString weightsDir, double w_lumi, vector<TString> trainVars, vector<TString> specVars, vector<TString> trainMethods, vector<double> methodsRangeDn, vector<double> methodsRangeUp, int plotPointsMethod, bool isSignal) {		
 
@@ -41,14 +15,22 @@ void evaluateMethodSig(TH2D *h_passEvents, TString sampleDir, TString weightsDir
 	chain.Add(sampleDir+"/*.root*");
 	chain.SetMakeClass(1);
 
+	TObjArray* tokens = sampleDir.Tokenize("/");
+	TString filename = ((TObjString*) (*tokens).Last())->GetString();
+
+	bool isdata = false;
+
+	if (filename.Contains("data") || filename.Contains("efake") || filename.Contains("jfake"))
+		isdata = true;
+
 	// Define all possible variables
 
-	Int_t ph_n, el_n, mu_n, jet_n, mcveto, pass_g140, n1decays;
-	Float_t met_et, dphi_jetmet, dphi_gammet, dphi_gamjet, ht, rt4, met_sig_obj, met_sig_evt, mt_gam, st_gam, meff, m_yy;
-	Float_t weight_mc, weight_pu, weight_sf, weight_ff;
+	Int_t ph_n=0, el_n=0, mu_n=0, jet_n=0, bjet_n=0, mcveto=0, pass_g140=0, n1decays=0;
+	Float_t met_et=-99., dphi_jetmet=-99., dphi_gammet=-99., dphi_gamjet=-99., ht=-99., rt4=-99., met_sig_obj=-99., met_sig_evt=-99., mt_gam=-99., st_gam=-99., meff=-99., m_yy=-99.;
+	Float_t weight_mc=1., weight_pu=1., weight_sf=1., weight_ff=1.;
 	std::vector<float> *ph_pt=0, *jet_pt=0;
 
-	Float_t ph_n_f, jet_n_f, bjet_n_f, ph_pt0, jet_pt0, lep_n, met_et_D_meff; // integers must be converted to Float_t
+	Float_t ph_n_f=0, jet_n_f=0, bjet_n_f=0, ph_pt0=0, jet_pt0=0, lep_n=0, met_et_D_meff=0.; // integers must be converted to Float_t
 
 	TBranch	*b_ph_pt=0, *b_jet_pt=0;
 
@@ -91,12 +73,19 @@ void evaluateMethodSig(TH2D *h_passEvents, TString sampleDir, TString weightsDir
 	}
 
 	chain.SetBranchAddress("pass_g140", &pass_g140);
+	if (!isdata)
+	{
+		chain.SetBranchAddress("mcveto", &mcveto);
+		chain.SetBranchAddress("n1decays", &n1decays);
+	}
+	else
+	{
+		chain.SetBranchAddress("weight_ff", &weight_ff);
+	}
+
 	chain.SetBranchAddress("weight_mc", &weight_mc);
 	chain.SetBranchAddress("weight_pu", &weight_pu);
 	chain.SetBranchAddress("weight_sf", &weight_sf);
-	chain.SetBranchAddress("weight_ff", &weight_ff);
-	chain.SetBranchAddress("mcveto", &mcveto);
-	chain.SetBranchAddress("n1decays", &n1decays);
 
 	chain.SetBranchAddress("ph_n", &ph_n);
 	chain.SetBranchAddress("el_n", &el_n);
@@ -125,8 +114,8 @@ void evaluateMethodSig(TH2D *h_passEvents, TString sampleDir, TString weightsDir
 
 	for (long long iEntry = 0; iEntry < nEntries; iEntry++) {	
 
-		if (nEntries>10 && iEntry % (long long)(nEntries/10) == 0) 
-			cout<<"Running... "<<(int)round(iEntry * 100. / nEntries)<<"%"<<endl; /* progress */
+		// if (nEntries>10 && iEntry % (long long)(nEntries/10) == 0) 
+		// 	cout<<"Running... "<<(int)round(iEntry * 100. / nEntries)<<"%"<<endl; /* progress */
 
 		chain.GetEntry(iEntry);
 
@@ -150,9 +139,10 @@ void evaluateMethodSig(TH2D *h_passEvents, TString sampleDir, TString weightsDir
 		if (!(preselCuts(pass_g140, mcveto, ph_n, el_n, mu_n, jet_n, ph_pt, met_et, dphi_jetmet, dphi_gammet, dphi_gamjet))) 
 			continue;
 
-		double weight = weight_sf * weight_pu * weight_mc * weight_ff * (mcveto==0) * w_lumi;
-
-		weight *= reweight_event(n1decays);
+		float weight = defineWeights(weight_mc, weight_sf, weight_pu, mcveto, weight_ff);
+		weight *= w_lumi;
+		if (isSignal)
+			weight *= reweight_event(n1decays);
 
 		// cout<<"ph_pt0: "<<ph_pt0<<endl;
 		// cout<<"ht: "<<ht<<endl;

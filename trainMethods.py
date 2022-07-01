@@ -2,7 +2,6 @@
 
 import os
 import sys
-import math
 import argparse
 import glob
 import shutil
@@ -17,8 +16,8 @@ from utils import printMsg
 
 parser = argparse.ArgumentParser()
 
-parser.add_argument('--mN1', dest='mN1', nargs='+', required=True)
-parser.add_argument('--BRs', dest='BRs', nargs='+', required=True) # BR_y, BR_Z, BR_h
+parser.add_argument('--mN1train', dest='mN1train', nargs='+', required=True)
+parser.add_argument('--N1BRs', dest='N1BRs', nargs='+', required=True) # BR_y, BR_Z, BR_h
 parser.add_argument('--year', dest='year', nargs='+', default=['2015', '2016', '2017', '2018'])
 parser.add_argument('--outputDir', dest='outputDir', type=str, default='./')
 parser.add_argument('--config', dest='config', type=str, default='config.yaml')
@@ -26,8 +25,8 @@ parser.add_argument('--tag', dest='tag', type=str, default='Default')
 
 args = parser.parse_args()
 
-printMsg('N1 masses used for training: %s' % ' '.join(args.mN1), 0)
-printMsg('N1 BRs: %s' % ' '.join(args.BRs), 0)
+printMsg('N1 masses used for training: %s' % ' '.join(args.mN1train), 0)
+printMsg('N1 BRs: %s' % ' '.join(args.N1BRs), 0)
 printMsg('Years: %s' % ' '.join(args.year), 0)
 printMsg('Output Dir: %s' % args.outputDir, 0)
 printMsg('Config file: %s' % args.config, 0)
@@ -35,7 +34,7 @@ printMsg('Tag: %s' % args.tag, 0)
 
 #--- initialization
 
-tag = '%s_%s_%s'% (args.tag, '_'.join(args.mN1), '_'.join(args.BRs))
+tag = '%s_%s_%s'% (args.tag, '_'.join(args.mN1train), '_'.join(args.N1BRs))
 
 with open(args.config, 'r') as f:
 	cfg = yaml.safe_load(f)
@@ -46,8 +45,8 @@ if not os.path.exists(outputDir):
 	os.makedirs(outputDir)
 
 cfg['tag'] = tag
-cfg['mN1'] = ','.join(args.mN1)
-cfg['BRs'] = ','.join(args.BRs)
+cfg['mN1train'] = ','.join(args.mN1train)
+cfg['N1BRs'] = ','.join(args.N1BRs)
 cfg['year'] = ','.join(args.year)
 
 with open('%s/config.yaml' % (outputDir), 'w+') as f:
@@ -56,7 +55,7 @@ with open('%s/config.yaml' % (outputDir), 'w+') as f:
 outputFilename = '%s/%s.root' % (outputDir, tag)
 outFile = ROOT.TFile(outputFilename, 'RECREATE')
 
-BR_y, BR_Z, BR_h = float(args.BRs[0]), float(args.BRs[1]), float(args.BRs[2])
+BR_y, BR_Z, BR_h = float(args.N1BRs[0]), float(args.N1BRs[1]), float(args.N1BRs[2])
 utils.reweight_event(BR_y, BR_Z, BR_h)
 
 #--- factory
@@ -79,7 +78,7 @@ else:
 	samplePath = cfg['samplesPath']
 	dataPreparation = ':'.join([cfg['dataSelectionOptions'], cfg['dataPreparation']])
 
-sigForTrain = [x for x in cfg['samplesSig'] for y in args.mN1 if y == x.split('_')[-1]]
+sigForTrain = [x for x in cfg['samplesSig'] for y in args.mN1train if y == x.split('_')[-1]]
 
 
 for sampleType in types:
@@ -88,7 +87,7 @@ for sampleType in types:
 
 		years = args.year
 
-		if not utils.isdata(sample) and '2015'  in years and '2016' in years:
+		if not utils.isdata(sample) and '2015' in years and '2016' in years:
 			years.remove('2015')
 			years.remove('2016')
 			years.insert(0, '20152016')
@@ -105,10 +104,10 @@ for sampleType in types:
 
 			for sampleSlice in sam.samples_dict[_sample]:
 
-				globFiles = '%s/%s*%s*_%s/*.root*' % (samplePath, sampleSlice, utils.campaign_tag[year], sampleType)
+				globFiles = '%s/%s.*.%s.*_%s/*.root*' % (samplePath, sampleSlice, utils.campaign_tag[year], sampleType)
 
 				if utils.isdata(sample):
-					globFiles = '%s/%s*_%s/*.root*' % (samplePath, sampleSlice, sampleType)
+					globFiles = '%s/%s.*_%s/*.root*' % (samplePath, sampleSlice, sampleType)
 
 				samplesFiles = glob.glob(globFiles)
 

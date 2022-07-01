@@ -1,3 +1,5 @@
+setupATLAS
+lsetup "root 6.20.06-x86_64-centos7-gcc8-opt"
 export SUSY_ANALYSIS=$PWD
 export PLOTTOOLS="PlotTools/"
 export PATH=$SUSY_ANALYSIS/scripts:$PLOTTOOLS:$PATH

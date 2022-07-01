@@ -2,11 +2,10 @@
 
 import os
 import sys
-import math
 import argparse
 import glob
-import array
 import yaml
+import copy
 
 import ROOT
 
@@ -20,20 +19,18 @@ parser = argparse.ArgumentParser()
 
 parser.add_argument('--methodsPath', dest='methodsPath', type=str, default=None)
 parser.add_argument('--nPoints', dest='nPoints', type=int, default=20)
-parser.add_argument('--samplesBkg', dest='sample', nargs='+')
-parser.add_argument('--samplesSig', dest='sample', nargs='+')
+parser.add_argument('--samplesBkg', dest='samplesBkg', nargs='+')
+parser.add_argument('--samplesSig', dest='samplesSig', nargs='+')
+parser.add_argument('--mN1test', dest='mN1test', nargs='+')
+parser.add_argument('--N1BRs', dest='N1BRs', nargs='+') # BR_y, BR_Z, BR_h
+parser.add_argument('--year', dest='year', nargs='+', default=['2015', '2016', '2017', '2018'])
+
 
 args = parser.parse_args()
 
 methodsPath = args.methodsPath
 
 if methodsPath.endswith('/'): methodsPath = methodsPath[:-1]
-
-if args.samplesSig: samplesSig = args.samplesSig
-else samplesSig = trainCfg['samplesSig']
-
-if args.samplesBkg: samplesBkg = args.samplesBkg
-else samplesBkg = trainCfg['samplesBkg']
 
 with open('%s/config.yaml' % (methodsPath), 'r') as f:
 	trainCfg = yaml.safe_load(f)
@@ -43,8 +40,22 @@ trainCfg['plotPointsMethod'] = args.nPoints
 with open('%s/config.yaml' % (methodsPath), 'w+') as f:
 	data = yaml.dump(trainCfg, f)
 
+if args.samplesSig: samplesSig = args.samplesSig
+else: samplesSig = trainCfg['samplesSig']
+
+if args.samplesBkg: samplesBkg = args.samplesBkg
+else: samplesBkg = trainCfg['samplesBkg']
+
+if args.mN1test: mN1test = args.mN1test
+else: mN1test = trainCfg['mN1train']
+
+if args.N1BRs: N1BRs = args.N1BRs
+else: N1BRs = trainCfg['N1BRs']
+
+if args.year: _years = args.year
+else: _years = trainCfg['year']
+
 tag = trainCfg['tag']
-signal = trainCfg['signal']
 
 weightsDir = '%s/DL_%s/weights/%s_' % (methodsPath, tag, tag)
 
@@ -69,40 +80,53 @@ for method in trainCfg['trainMethods']:
 
 utils.presel_cut(trainCfg['preselCuts'].replace('[0]', '->at(0)'))
 
+utils.define_weights(trainCfg['eventByEventWeight'])
+
+BRs = N1BRs.split(',')
+BR_y, BR_Z, BR_h = float(BRs[0]), float(BRs[1]), float(BRs[2])
+utils.reweight_event(BR_y, BR_Z, BR_h)
+
 ROOT.gInterpreter.Declare(open('lib/evaluateMethodSig.cxx').read())
 
-BRs = trainCfg['BRs'].split(',')
-BR_y, BR_Z, BR_h = args.BRs[0], args.BRs[1], args.BRs[2]
-utils.reweight_event(BR_y, BR_Z, BR_h)
 
 
 for sample in samplesBkg + samplesSig:
 
 	isSignal = sample in samplesSig
 
-	for year in trainCfg['years']:
+	years = copy.deepcopy(_years)
+
+	if not utils.isdata(sample) and '2015' in years and '2016' in years:
+		years.remove('2015')
+		years.remove('2016')
+		years.insert(0, '20152016')
+
+	for year in years:
 
 		h_passEvents = ROOT.TH2D('h_passEvents', 'h_passEvents', nMethods, 0, nMethods, trainCfg['plotPointsMethod'], 0, trainCfg['plotPointsMethod'])
 		h_passEvents.SetDirectory(0)
 
-		for sampleSlice in sam.samples_dict[sample]:
+		_sample = sample
+
+		if utils.isdata(sample):
+
+			_sample = '%s%s' % (sample, year[-2:])
+
+		for sampleSlice in sam.samples_dict[_sample]:
 
 			printMsg('Evaluating %s %s %s' % (sample, year, sampleSlice), 0)
 
-			samplePath = '%s/%s*%s*' % (trainCfg['samplesPath'], sampleSlice, utils.campaign_tag[year])
+			globDir = '%s/%s.*.%s.*' % (trainCfg['samplesPath'], sampleSlice, utils.campaign_tag[year])
 
-			if isSignal and trainCfg['useTestForPlotSig']: 
+			if sample in trainCfg['samplesWithTestSample']:
 
-				samplePath = '%s/%s*%s*_test' % (trainCfg['TMVAsamplesPath'], sampleSlice, utils.campaign_tag[year])
+				globDir = '%s/%s.*_test' % (trainCfg['TMVAsamplesPath'], sampleSlice)
 
-			if not isSignal and trainCfg['useTestForPlotBkg']: 
-
-				samplePath = '%s/%s*%s*_test' % (trainCfg['TMVAsamplesPath'], sampleSlice, utils.campaign_tag[year])
-
-			sampleDir = glob.glob(samplePath)
+			print globDir
+			sampleDir = glob.glob(globDir)
 
 			if len(sampleDir) != 1:
-				printMsg('Empty sample %s' % samplePath, 1)
+				printMsg('Empty sample %s' % sampleDir, 1)
 				continue
 
 			sampleDir = sampleDir[0]
