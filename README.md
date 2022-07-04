@@ -44,7 +44,7 @@ The script will read the following arguments from the configfile
 	specVars: option of TMVA
 	preselCuts: option of TMVA
 
-The trained methods are stored in:
+The trained methods are stored in: output_path/DL_*/weights/*.{C,xml}
 
 ## Plots 
 
@@ -57,10 +57,15 @@ To retrieve the TMVA plots use it with the following flag
 
 	--plotTMVA
 
-To create the plots as a function of the method output first you need to run `evaluateMethodSig.py`
-
+To create the plots using the totality of the ntuples first you need to run `evaluateMethodSig.py`
+	
+	--methodsPath: output directory of the methods training
 	--nPoints: number of values evaluated for each method output 
-
+	--samplesBkg: background sample to evaluate
+	--samplesSig: signal sample to evaluate
+	--mN1test: list of N1 masses to use for evaluating
+	--N1BRs: list BRs of the N1, BR_y, BR_Z, BR_h
+	--year: years of datasets 
 
 Then run `plotResults.py` with 
 

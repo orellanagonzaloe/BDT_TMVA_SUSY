@@ -5,6 +5,7 @@ import sys
 import math
 import argparse
 import glob
+import copy
 import array
 import yaml
 
@@ -18,7 +19,7 @@ import plotFunc as PTf
 import classes as PTc
 
 
-def retrieveHistos(methodsPath, years, trainCfg):
+def retrieveHistos(methodsPath, _years, trainCfg):
 
 	d_passEvents = {}
 	TG_sig = {}
@@ -30,90 +31,79 @@ def retrieveHistos(methodsPath, years, trainCfg):
 		TG_sig[method[0]] = {}
 		h_method[method[0]] = {}
 
-		for sam in trainCfg['samplesBkg'] + trainCfg['samplesSig']:
+		d_passEvents[method[0]]['total_bkg'] = [0.] * trainCfg['plotPointsMethod']
 
-			d_passEvents[method[0]][sam] = [0.] * trainCfg['plotPointsMethod']
+		for sample in trainCfg['samplesBkg'] + trainCfg['samplesSig']:
+
+			d_passEvents[method[0]][sample] = [0.] * trainCfg['plotPointsMethod']
 
 
 
 	for i_method, method in enumerate(trainCfg['trainMethods']):
-
-		d_passEvents[method[0]]['total_bkg'] = [0.] * trainCfg['plotPointsMethod']
 
 		start = utils.methodsRange[method[1]][0]
 		end = utils.methodsRange[method[1]][1]
 
 		h_method[method[0]]['total_bkg'] = ROOT.TH1D('%s_total_bkg' % (method[0]), '%s_total_bkg' % (method[0]), trainCfg['plotPointsMethod'], start, end)
 
-		for sam in trainCfg['samplesBkg']:
+		for sample in trainCfg['samplesBkg'] + trainCfg['samplesSig']:
 
-			h_method[method[0]][sam] = ROOT.TH1D('%s_%s' % (method[0], sam), '%s_%s' % (method[0], sam), trainCfg['plotPointsMethod'], start, end)
+			h_method[method[0]][sample] = ROOT.TH1D('%s_%s' % (method[0], sample), '%s_%s' % (method[0], sample), trainCfg['plotPointsMethod'], start, end)
 
-			d_passEvents[method[0]][sam] = [0.] * trainCfg['plotPointsMethod']
+			if sample in trainCfg['samplesSig']:
+				h_method[method[0]]['%s_sig' % sample] = ROOT.TH1D('%s_%s_sig' % (method[0], sample), '%s_%s_sig' % (method[0], sample), trainCfg['plotPointsMethod'], start, end)
+
+			d_passEvents[method[0]][sample] = [0.] * trainCfg['plotPointsMethod']
+
+			years = copy.deepcopy(_years)
+
+			if not utils.isdata(sample) and '2015' in years and '2016' in years:
+				years.remove('2015')
+				years.remove('2016')
+				years.insert(0, '20152016')
 
 			for year in years:
 
-				output_sam_file = ROOT.TFile('%s/h_pass_%s_%s.root' % (methodsPath, sam, year), 'READ')
+				output_sam_file = ROOT.TFile('%s/h_pass_%s_%s.root' % (methodsPath, sample, year), 'READ')
 				h_pass_tmp = output_sam_file.Get('h_passEvents')
 				h_pass_tmp.SetDirectory(0)
 
 				for x in xrange(trainCfg['plotPointsMethod']):
 
-					d_passEvents[method[0]][sam][x] += h_pass_tmp.GetBinContent(i_method+1, x+1)
-					d_passEvents[method[0]]['total_bkg'][x] += h_pass_tmp.GetBinContent(i_method+1, x+1)
+					d_passEvents[method[0]][sample][x] += h_pass_tmp.GetBinContent(i_method+1, x+1)
+
+					if sample not in trainCfg['samplesSig']:
+						d_passEvents[method[0]]['total_bkg'][x] += h_pass_tmp.GetBinContent(i_method+1, x+1)
 
 					method_output = start + (end-start)*(x+0.5)/trainCfg['plotPointsMethod']
 
-					h_method[method[0]][sam].Fill(method_output, h_pass_tmp.GetBinContent(i_method+1, x+1))
+					h_method[method[0]][sample].Fill(method_output, h_pass_tmp.GetBinContent(i_method+1, x+1))
 
 				output_sam_file.Close()
 
 
+			if sample in trainCfg['samplesSig']:
 
-		for sam in trainCfg['samplesSig']:
-
-			h_method[method[0]][sam] = ROOT.TH1D('%s_%s' % (method[0], sam), '%s_%s' % (method[0], sam), trainCfg['plotPointsMethod'], start, end)
-
-			h_method[method[0]]['%s_sig' % sam] = ROOT.TH1D('%s_%s_sig' % (method[0], sam), '%s_%s_sig' % (method[0], sam), trainCfg['plotPointsMethod'], start, end)
-
-			d_passEvents[method[0]][sam] = [0.] * trainCfg['plotPointsMethod']
-
-			for year in years:
-
-				output_sam_file = ROOT.TFile('%s/h_pass_%s_%s.root' % (methodsPath, sam, year), 'READ')
-				h_pass_tmp = output_sam_file.Get('h_passEvents')
-				h_pass_tmp.SetDirectory(0)
+				x_tmp, y_tmp = array.array('f'), array.array('f')
 
 				for x in xrange(trainCfg['plotPointsMethod']):
 
-					d_passEvents[method[0]][sam][x] += h_pass_tmp.GetBinContent(i_method+1, x+1)
+					method_output = start + (end-start)*x/trainCfg['plotPointsMethod']
+					bkg_tmp = d_passEvents[method[0]]['total_bkg'][x]
+					sig_tmp = d_passEvents[method[0]][sample][x]
 
-					method_output = start + (end-start)*(x+0.5)/trainCfg['plotPointsMethod']
+					z_tmp = ROOT.RooStats.NumberCountingUtils.BinomialExpZ(sig_tmp, bkg_tmp, 0.3)
 
-					h_method[method[0]][sam].Fill(method_output, h_pass_tmp.GetBinContent(i_method+1, x+1))
+					if sig_tmp<3. or bkg_tmp<1. or z_tmp<0. or z_tmp==float('Inf'): z_tmp=0.
 
-				output_sam_file.Close()
+					x_tmp.append(method_output)
+					y_tmp.append(z_tmp) 
 
-			x_tmp, y_tmp = array.array('f'), array.array('f')
+					h_method[method[0]]['%s_sig' % sample].SetBinContent(x+1, z_tmp)
 
-			for x in xrange(trainCfg['plotPointsMethod']):
+				TG_sig[method[0]]['%s_sig' % sample] = ROOT.TGraph(trainCfg['plotPointsMethod'], x_tmp, y_tmp)
 
-				method_output = start + (end-start)*x/trainCfg['plotPointsMethod']
-				bkg_tmp = d_passEvents[method[0]]['total_bkg'][x]
-				sig_tmp = d_passEvents[method[0]][sam][x]
-
-				z_tmp = ROOT.RooStats.NumberCountingUtils.BinomialExpZ(sig_tmp, bkg_tmp, 0.3)
-
-				if sig_tmp<3. or bkg_tmp<1. or z_tmp<0. or z_tmp==float('Inf'): z_tmp=0.
-
-				x_tmp.append(method_output)
-				y_tmp.append(z_tmp) 
-
-				h_method[method[0]]['%s_sig' % sam].SetBinContent(x+1, z_tmp)
-
-			TG_sig[method[0]]['%s_sig' % sam] = ROOT.TGraph(trainCfg['plotPointsMethod'], x_tmp, y_tmp)
-
-			# TG_sig[method[0]]['%s_sig' % sam].Print('all')
+				# TG_sig[method[0]]['%s_sig' % sample].Print('all')
 
 	return d_passEvents, TG_sig, h_method
 
@@ -451,12 +441,15 @@ args = parser.parse_args()
 with open('%s/config.yaml' % (args.methodsPath), 'r') as f:
 	trainCfg = yaml.safe_load(f)
 
+if args.year: _years = args.year
+else: _years = trainCfg['year']
+
 if not os.path.exists(args.outputDirPlots):
 	os.makedirs(args.outputDirPlots)
 
 if args.plotSignificance:
 
-	d_passEvents, TG_sig, h_method = retrieveHistos(args.methodsPath, args.year, trainCfg)
+	d_passEvents, TG_sig, h_method = retrieveHistos(args.methodsPath, _years, trainCfg)
 
 	for method in trainCfg['trainMethods']:
 

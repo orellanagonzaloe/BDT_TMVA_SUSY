@@ -35,11 +35,6 @@ if methodsPath.endswith('/'): methodsPath = methodsPath[:-1]
 with open('%s/config.yaml' % (methodsPath), 'r') as f:
 	trainCfg = yaml.safe_load(f)
 
-trainCfg['plotPointsMethod'] = args.nPoints
-
-with open('%s/config.yaml' % (methodsPath), 'w+') as f:
-	data = yaml.dump(trainCfg, f)
-
 if args.samplesSig: samplesSig = args.samplesSig
 else: samplesSig = trainCfg['samplesSig']
 
@@ -54,6 +49,13 @@ else: N1BRs = trainCfg['N1BRs']
 
 if args.year: _years = args.year
 else: _years = trainCfg['year']
+
+trainCfg['plotPointsMethod'] = args.nPoints
+trainCfg['mN1test'] = mN1test
+trainCfg['N1BRstest'] = N1BRs
+
+with open('%s/config.yaml' % (methodsPath), 'w+') as f:
+	data = yaml.dump(trainCfg, f)
 
 tag = trainCfg['tag']
 
@@ -116,13 +118,23 @@ for sample in samplesBkg + samplesSig:
 
 			printMsg('Evaluating %s %s %s' % (sample, year, sampleSlice), 0)
 
-			globDir = '%s/%s.*.%s.*' % (trainCfg['samplesPath'], sampleSlice, utils.campaign_tag[year])
-
-			if sample in trainCfg['samplesWithTestSample']:
+			if sample in trainCfg['samplesWithTestSample'] and utils.isdata(sample):
 
 				globDir = '%s/%s.*_test' % (trainCfg['TMVAsamplesPath'], sampleSlice)
 
-			print globDir
+			elif sample in trainCfg['samplesWithTestSample']:
+
+				globDir = '%s/%s.*.%s.*_test' % (trainCfg['TMVAsamplesPath'], sampleSlice, utils.campaign_tag[year])
+
+			elif utils.isdata(sample):
+
+				globDir = '%s/%s.*' % (trainCfg['samplesPath'], sampleSlice)
+
+			else:
+
+				globDir = '%s/%s.*.%s.*' % (trainCfg['samplesPath'], sampleSlice, utils.campaign_tag[year])
+
+
 			sampleDir = glob.glob(globDir)
 
 			if len(sampleDir) != 1:
