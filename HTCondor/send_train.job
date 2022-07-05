@@ -1,8 +1,8 @@
 executable            = run_train.sh
 
-output                = log/job_train_$(tag)_$(signal)_$(ClusterId)_$(ProcId).out
-error                 = log/job_train_$(tag)_$(signal)_$(ClusterId)_$(ProcId).err
-log                   = log/job_train_$(tag)_$(signal)_$(ClusterId)_$(ProcId).log
+output                = log/job_train_$(tag)_$(mN1)_$(BRs)_$(ClusterId)_$(ProcId).out
+error                 = log/job_train_$(tag)_$(mN1)_$(BRs)_$(ClusterId)_$(ProcId).err
+log                   = log/job_train_$(tag)_$(mN1)_$(BRs)_$(ClusterId)_$(ProcId).log
 
 
 transfer_input_files = ../trainMethods.py, ../lib, ../configs
@@ -10,43 +10,24 @@ should_transfer_files = YES
 when_to_transfer_output = ON_EXIT
 
 
-+MaxRuntime = 15000
++MaxRuntime = 1500
 # +JobFlavour = "testmatch"
 
-tag = EWK_v3
+tag = test
 
-config = configs/config_EWK_v3.yaml
+config = configs/config_test.yaml
 
-outputDir = /eos/user/g/goorella/PhX_TMVA/EWK_v3
+outputDir = /eos/user/g/goorella/PhX_TMVA/test
 
+year = 2015_2016_2017_2018
 # transfer_output_files = trainOutput_$(tag)_$(signal)
 # outputDir = ./
 
-arguments = $(signal) $(tag) $(outputDir) $(config) 
+arguments = $(mN1) $(BRs) $(year) $(tag) $(outputDir) $(config)
 
-queue signal from (
-	# GGM_N1N2C1_phZ_150
-	# GGM_N1N2C1_phZ_250
-	# GGM_N1N2C1_phZ_350
-	GGM_N1N2C1_phZ_450
-	# GGM_N1N2C1_phZ_550
-	# GGM_N1N2C1_phZ_650
-	# GGM_N1N2C1_phZ_750
-	# GGM_N1N2C1_phZ_850
-	# GGM_N1N2C1_phZ_950
-	# GGM_N1N2C1_phZ_1050
-	# GGM_N1N2C1_phZ_1250
-	# GGM_N1N2C1_phZ_1450
-	# GGM_N1N2C1_phb_150
-	# GGM_N1N2C1_phb_250
-	# GGM_N1N2C1_phb_350
-	# GGM_N1N2C1_phb_450
-	# GGM_N1N2C1_phb_550
-	# GGM_N1N2C1_phb_650
-	# GGM_N1N2C1_phb_750
-	# GGM_N1N2C1_phb_850
-	# GGM_N1N2C1_phb_950
-	# GGM_N1N2C1_phb_1050
-	# GGM_N1N2C1_phb_1250
-	# GGM_N1N2C1_phb_1450
+queue mN1,BRs from (
+	150_250_350, 0.5_0._0.5
+	450_550_650, 0.5_0._0.5
+	750_850_950, 0.5_0._0.5
+	1050_1250_1450, 0.5_0._0.5
 )

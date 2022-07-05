@@ -44,7 +44,7 @@ The script will read the following arguments from the configfile
 	specVars: option of TMVA
 	preselCuts: option of TMVA
 
-The trained methods are stored in: output_path/DL_*/weights/*.{C,xml}
+The trained methods are stored in: output_path/DL_\*/weights/\*.{C,xml}
 
 ## Plots 
 

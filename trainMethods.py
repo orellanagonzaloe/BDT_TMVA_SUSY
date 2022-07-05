@@ -34,7 +34,7 @@ printMsg('Tag: %s' % args.tag, 0)
 
 #--- initialization
 
-tag = '%s_%s_%s'% (args.tag, '_'.join(args.mN1train), '_'.join(args.N1BRs))
+tag = '%s_%s_%s'% (args.tag, '_'.join(args.mN1train), '_'.join(args.N1BRs).replace('.', 'p'))
 
 with open(args.config, 'r') as f:
 	cfg = yaml.safe_load(f)
@@ -54,6 +54,13 @@ with open('%s/config.yaml' % (outputDir), 'w+') as f:
 
 outputFilename = '%s/%s.root' % (outputDir, tag)
 outFile = ROOT.TFile(outputFilename, 'RECREATE')
+
+print args.N1BRs
+print args.N1BRs[0]
+print args.N1BRs[1]
+print args.N1BRs[2]
+print float(args.N1BRs[0])
+
 
 BR_y, BR_Z, BR_h = float(args.N1BRs[0]), float(args.N1BRs[1]), float(args.N1BRs[2])
 utils.reweight_event(BR_y, BR_Z, BR_h)

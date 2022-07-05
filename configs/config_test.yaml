@@ -1,88 +1,70 @@
 # storage paths
-samplesPath: /eos/user/g/goorella/data/mini2/v174_0
-TMVAsamplesPath: /eos/user/g/goorella/data/mini2/v174_0_TMVA
-
-useTestForPlotSig: True
-useTestForPlotBkg: False
+samplesPath: /eos/user/g/goorella/data/mini2/v210_0
+TMVAsamplesPath: /eos/user/g/goorella/data/mini2/v210_0_TMVA
   
-trainTestSplit: 
+trainTestSplit: # percentage of events kept for train and test. you can specify custom split for each sample, otherwise split is taken from bkg or signal
   bkg: 5
   signal: 50
-  wgamma: 10
-  znunugamma: 10
-  wjets: 10
-  vgammagamma: 10
+  photonjet: 2.
+  efake: 50
+  jfakeiso: 50
+  # ttgamma: 2.5
+  # znunugamma: 2.5
 
 samplesBkg:
-  - photonjet
-  - znunugamma
-  - zllgamma
-  - wgamma
-  - ttgamma
-  - diphoton
-  - vgammagamma
-  - higgs
+  # - photonjet
+  # - znunugamma
+  # - zllgamma
+  # - wgamma
+  # - ttgamma
+  # - diphoton
+  # - vgammagamma
+  # - higgs
 
-  - wjets
-  - zjets
-  - multijet
-  - ttbar
+  - efake
+  - jfakeiso
+  # - jfakeid
+  # - jfakeiso2
+  # - jfakeid2
+
+  # - wjets
+  # - zjets
+  # - multijet
+  # - ttbar
 
 samplesSig:
-  - GGM_N1N2C1_phZ_150
-  - GGM_N1N2C1_phZ_250
-  - GGM_N1N2C1_phZ_350
-  - GGM_N1N2C1_phZ_450
-  - GGM_N1N2C1_phZ_550
-  - GGM_N1N2C1_phZ_650
-  - GGM_N1N2C1_phZ_750
-  - GGM_N1N2C1_phZ_850
-  - GGM_N1N2C1_phZ_950
-  - GGM_N1N2C1_phZ_1050
-  - GGM_N1N2C1_phZ_1250
-  - GGM_N1N2C1_phZ_1450
-
-  - GGM_N1N2C1_phb_150
-  - GGM_N1N2C1_phb_250
-  - GGM_N1N2C1_phb_350
-  - GGM_N1N2C1_phb_450
-  - GGM_N1N2C1_phb_550
-  - GGM_N1N2C1_phb_650
-  - GGM_N1N2C1_phb_750
-  - GGM_N1N2C1_phb_850
-  - GGM_N1N2C1_phb_950
-  - GGM_N1N2C1_phb_1050
-  - GGM_N1N2C1_phb_1250
-  - GGM_N1N2C1_phb_1450
+  - GGM_N1N2C1_150
+  - GGM_N1N2C1_250
+  - GGM_N1N2C1_350
+  - GGM_N1N2C1_450
+  - GGM_N1N2C1_550
+  - GGM_N1N2C1_650
+  - GGM_N1N2C1_750
+  - GGM_N1N2C1_850
+  - GGM_N1N2C1_950
+  - GGM_N1N2C1_1050
+  - GGM_N1N2C1_1250
+  - GGM_N1N2C1_1450
 
 
-alpha: 
-  ttgamma: 1.34
-  wgamma: 0.92
-  photonjet_nnlo: 0.52
-
-
-useTotalXSForSignal: True
-
-plotPointsMethod: 20
-
-years:
-  - 20152016
-  - 2017
-  - 2018
+sampleTF: # transfer factor obtained from the cut&count analysis
+  ttgamma: 0.8
+  tth: 0.8
+  wgamma: 0.95
+  zllgamma: 0.99
+  znunugamma: 0.99
 
 
 factoryOptions: V:AnalysisType=Classification:Correlations=True
-eventByEventWeight: weight_mc*weight_sf*weight_pu
+eventByEventWeight: weight_mc*weight_sf*weight_pu*(mcveto==0)*weight_ff  # MC and DD weights are combined since I cannot find a more elegant way to do it
 
-preselCuts: pass_g140==1 && ph_n>0 && jet_n>0 && el_n+mu_n==0 && ph_pt[0]>145 && met_et>50 && dphi_jetmet>0.4 && dphi_gammet>0.4 && mcveto==0
-# preselCuts: met_et>200&&ph_n==1&&jet_n>0&&el_n+mu_n==0&&mcveto==0&&dphi_jetmet>0.4&&dphi_gammet>0.4&&pass_xe==1&&mcveto==0
+preselCuts: pass_g140==1 && ph_n>0 && jet_n>0 && el_n+mu_n==0 && ph_pt[0]>145 && met_et>50 && dphi_jetmet>0.4 && dphi_gammet>0.4
 
 dataSelectionOptions: ''
 # dataSelectionOptions: SplitMode=Random:SplitSeed=0
 
-# dataPreparation: ''
 dataPreparation: NormMode=EqualNumEvents:V
+# dataPreparation: ''
 
 trainVars:
   
@@ -98,7 +80,7 @@ trainVars:
   - ['dphi_jetmet', '#Delta#varphi(E_{T}^{miss}, j)', '', 'F']
   - ['dphi_gammet', '#Delta#varphi(E_{T}^{miss}, #gamma)', '', 'F']
   - ['dphi_gamjet', '#Delta#varphi(#gamma, j)', '', 'F']
-  - ['met_sig2', 'E_{T}^{miss} Sig (Obj)', 'GeV^{1/2}', 'F']
+  - ['met_sig_obj', 'E_{T}^{miss} Sig (Obj)', 'GeV^{1/2}', 'F']
   - ['mt_gam', 'M_{T}^{#gamma, E_{T}^{miss}}', 'GeV', 'F']
   - ['st_gam := met_et+ph_pt[0]', 'S_{T}^{#gamma}', 'GeV', 'F']
 
@@ -121,7 +103,29 @@ trainMethods:
 
   # Methods with 'Cuts' in their name will be considered as kCuts
   # [name, type, options]
-  - ['BDT_v1_1', 'BDT', 'DoBoostMonitor=True:CreateMVAPdfs:VarTransform=G+D+N']
-  - ['BDT_v1_2', 'BDT', 'DoBoostMonitor=True:CreateMVAPdfs']
-  - ['BDT_v1_3', 'BDT', 'DoBoostMonitor=True:CreateMVAPdfs:MaxDepth=4']
-  - ['BDT_v1_4', 'BDT', 'DoBoostMonitor=True:CreateMVAPdfs:VarTransform=G+D+N:MaxDepth=4:SeparationType=SDivSqrtSPlusB']
+  - ['BDT_1', 'BDT', 'DoBoostMonitor=True:CreateMVAPdfs:VarTransform=G+D+N']
+  - ['BDT_2', 'BDT', 'DoBoostMonitor=True:CreateMVAPdfs']
+
+
+
+useTestForPlotSig: True
+useTestForPlotBkg: False
+
+samplesWithTestSample:
+  - efake
+  - jfakeiso
+  - jfakeid
+  - jfakeiso2
+  - jfakeid2
+  - GGM_N1N2C1_150
+  - GGM_N1N2C1_250
+  - GGM_N1N2C1_350
+  - GGM_N1N2C1_450
+  - GGM_N1N2C1_550
+  - GGM_N1N2C1_650
+  - GGM_N1N2C1_750
+  - GGM_N1N2C1_850
+  - GGM_N1N2C1_950
+  - GGM_N1N2C1_1050
+  - GGM_N1N2C1_1250
+  - GGM_N1N2C1_1450

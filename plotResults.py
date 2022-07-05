@@ -120,7 +120,7 @@ def plotSignificance(TG_sig, method, methodsPath, trainCfg, outputDirPlots):
 	mg = ROOT.TMultiGraph()
 
 	legend = ROOT.TLegend(0.15,0.5,0.5,0.91)
-	legend.SetNColumns(3)
+	legend.SetNColumns(1)
 
 	# [150, 250, 350, 450, 550, 650, 750, 850, 950, 1050, 1250, 1450]
 
@@ -128,27 +128,17 @@ def plotSignificance(TG_sig, method, methodsPath, trainCfg, outputDirPlots):
 
 	for i_color, mN1 in enumerate([150, 250, 350, 450, 550, 650, 750, 850, 950]):
 
-		TG_sig[method[0]]['GGM_N1N2C1_phZ_%i_sig' % mN1].SetMarkerStyle(20)
-		TG_sig[method[0]]['GGM_N1N2C1_phZ_%i_sig' % mN1].SetMarkerSize(1.2)
-		TG_sig[method[0]]['GGM_N1N2C1_phZ_%i_sig' % mN1].SetLineWidth(2)
+		TG_sig[method[0]]['GGM_N1N2C1_%i_sig' % mN1].SetMarkerStyle(20)
+		TG_sig[method[0]]['GGM_N1N2C1_%i_sig' % mN1].SetMarkerSize(1.2)
+		TG_sig[method[0]]['GGM_N1N2C1_%i_sig' % mN1].SetLineWidth(2)
 
-		TG_sig[method[0]]['GGM_N1N2C1_phZ_%i_sig' % mN1].SetMarkerColor(ROOT.TColor.GetColor(color_list[i_color]))
-		TG_sig[method[0]]['GGM_N1N2C1_phZ_%i_sig' % mN1].SetLineColor(ROOT.TColor.GetColor(color_list[i_color]))
+		TG_sig[method[0]]['GGM_N1N2C1_%i_sig' % mN1].SetMarkerColor(ROOT.TColor.GetColor(color_list[i_color]))
+		TG_sig[method[0]]['GGM_N1N2C1_%i_sig' % mN1].SetLineColor(ROOT.TColor.GetColor(color_list[i_color]))
 
-		TG_sig[method[0]]['GGM_N1N2C1_phb_%i_sig' % mN1].SetMarkerStyle(52)
-		TG_sig[method[0]]['GGM_N1N2C1_phb_%i_sig' % mN1].SetMarkerSize(1.2)
-		TG_sig[method[0]]['GGM_N1N2C1_phb_%i_sig' % mN1].SetLineWidth(2)
-		TG_sig[method[0]]['GGM_N1N2C1_phb_%i_sig' % mN1].SetLineStyle(7)
+		# legend.AddEntry(TG_sig[method[0]]['GGM_N1N2C1_%i_sig' % mN1], 'phZ', 'pl')
+		legend.AddEntry(TG_sig[method[0]]['GGM_N1N2C1_%i_sig' % mN1], 'mN1 = %i' % mN1, 'pl')
 
-		TG_sig[method[0]]['GGM_N1N2C1_phb_%i_sig' % mN1].SetMarkerColor(ROOT.TColor.GetColor(color_list[i_color]))
-		TG_sig[method[0]]['GGM_N1N2C1_phb_%i_sig' % mN1].SetLineColor(ROOT.TColor.GetColor(color_list[i_color]))
-
-		legend.AddEntry(TG_sig[method[0]]['GGM_N1N2C1_phZ_%i_sig' % mN1], 'phZ', 'pl')
-		legend.AddEntry(TG_sig[method[0]]['GGM_N1N2C1_phb_%i_sig' % mN1], 'phb', 'pl')
-		legend.AddEntry(TG_sig[method[0]]['GGM_N1N2C1_phZ_%i_sig' % mN1], 'mN1 = %i' % mN1, '')
-
-		mg.Add(TG_sig[method[0]]['GGM_N1N2C1_phZ_%i_sig' % mN1])
-		mg.Add(TG_sig[method[0]]['GGM_N1N2C1_phb_%i_sig' % mN1])
+		mg.Add(TG_sig[method[0]]['GGM_N1N2C1_%i_sig' % mN1])
 
 
 	mg.Draw('cp same')
@@ -177,7 +167,7 @@ def plotSignificance(TG_sig, method, methodsPath, trainCfg, outputDirPlots):
 	data_label.SetLineWidth(2)
 	data_label.Draw()
 
-	legend.SetTextSize(0.04)
+	legend.SetTextSize(0.03)
 	legend.SetBorderSize(0)
 	legend.Draw()
 
